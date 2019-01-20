@@ -1,0 +1,15 @@
+name: doom-agent
+channels:
+- https://conda.anaconda.org/menpo
+- defaults
+- conda-forge
+- anaconda
+dependencies:
+    - python==3.6.7
+    - numpy
+    - matplotlib
+    - tensorflow-gpu
+    - tensorboard
+    - scikit-image
+    - pip:
+        - git+https://github.com/mwydmuch/ViZDoom
