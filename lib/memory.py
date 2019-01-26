@@ -3,7 +3,7 @@ import numpy as np
 
 
 class Memory:
-    def __init__(self, max_size): self.buffer = deque(maxlen=max_size)
+    def __init__(self, size): self.buffer = deque(maxlen=size)
 
     def add(self, experience): self.buffer.append(experience)
 

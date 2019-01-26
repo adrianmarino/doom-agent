@@ -11,5 +11,7 @@ dependencies:
     - tensorflow-gpu
     - tensorboard
     - scikit-image
+    - tensorflow-gpu
+    - keras
     - pip:
         - git+https://github.com/mwydmuch/ViZDoom
