@@ -1,18 +1,16 @@
 class DoomRewardsComputationStrategy:
-    def calculate(self, env, rewards, current_state, next_state):
-        if self.__kill_count(current_state) > self.__kill_count(next_state):
+    def calculate(self, env, current_state, next_state):
+        rewards = env.accumulated_rewards()
+        if env.is_episode_finished():
+            return rewards
+
+        if current_state.var('kills') > next_state.var('kills'):
             rewards += 1
-        if self.__ammo_count(current_state) < self.__ammo_count(next_state):
+
+        if current_state.var('ammo') < next_state.var('ammo'):
             rewards -= 1
-        if self.__health_count(current_state) < self.__health_count(next_state):
+
+        if current_state.var('health') < next_state.var('health'):
             rewards -= 1
+
         return rewards
-
-    @staticmethod
-    def __kill_count(state): return state.variables()[0]
-
-    @staticmethod
-    def __ammo_count(state): return state.variables()[1]
-
-    @staticmethod
-    def __health_count(state): return state.variables()[2]

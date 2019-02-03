@@ -8,13 +8,13 @@ class EpsilonValue:
 
     def reset(self): self.__value = self.__initial_value
 
-    def value(self): self.__value
+    def value(self): return self.__value
 
     def decrement(self, time):
-        if self.__is_observation_phase(time) or self.__reach_min_value(): return self.__value
+        if self.__is_observation_phase(time) or self.__reach_min_value():
+            return self.__value
 
         self.__value -= self.delta()
-
         return self.value()
 
     def __delta(self): return (self.__initial_value - self.__final_value) / self.explore

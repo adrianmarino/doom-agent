@@ -1,27 +1,19 @@
 from vizdoom import *
 
-from lib.state_transition import StateTransition
 from lib.rewards.default_rewards_calculation_strategy import DefaultRewardsComputationStrategy
-from lib.on_hot_vector_factory import OnHotVectorFactory
-
-
-class EnvironmentState:
-    def __init__(self, game_state): self.__game_state = game_state
-
-    def frame(self): return self.__get_state.screen_buffer
-
-    def variables(self): return self.__get_state.game_variables
-
+from lib.state.environment_state import EnvironmentState
+from lib.util.on_hot_vector_factory import OnHotVectorFactory
 
 class Environment:
     def __init__(
             self,
             config_file,
             advance_steps,
+            variable_names,
             rewards_computation_strategy=DefaultRewardsComputationStrategy(),
             sound_enabled=False,
             screen_resolution=ScreenResolution.RES_640X480,
-            window_visible=False
+            window_visible=True
     ):
         self.__game = DoomGame()
         self.__game.load_config(config_file)
@@ -31,35 +23,36 @@ class Environment:
         self.__game.init()
         self.advance_steps = advance_steps
         self.rewards_computation_strategy = rewards_computation_strategy
+        self.__variable_names = variable_names
+
 
     def new_episode(self): self.__game.new_episode()
 
     def make_action(self, action):
-        current_state = self.current_state()
+        initial_state = self.current_state()
+        if(self.is_episode_finished()):
+            return 0
 
         self.__make_action(action)
         self.__advance_states(self.advance_steps)
 
-        next_state = self.current_state()
-        rewards = self.rewards_computation_strategy.calculate(self, current_state, next_state)
-        episode_finished = self.is_episode_finished()
+        final_state = self.current_state()
+        if(self.is_episode_finished()):
+            return 0
 
-        return StateTransition(current_state, action, rewards, next_state, episode_finished)
+        return self.rewards_computation_strategy.calculate(self, initial_state, final_state)
 
     def accumulated_rewards(self): return self.__game.get_last_reward()
 
     def is_episode_finished(self): return self.__game.is_episode_finished()
 
-    def possible_actions(self): return self.__game.game_variables
-
-    def possible_actions_size(self): return len(self.possible_actions())
-
     def __make_action(self, action_number):
-        action = OnHotVectorFactory.create(size=self.possible_actions_size(), one_index=action_number)
+        action = OnHotVectorFactory.create(size=self.actions_count(), one_index=action_number)
         self.__game.make_action(action)
 
     def __advance_states(self, count): self.__game.advance_action(count)
 
-    def current_state(self): return EnvironmentState(self.__game.get_state())
+    def current_state(self):
+        return EnvironmentState(self.__game.get_state(), self.__variable_names)
 
-
+    def actions_count(self): return self.__game.get_available_buttons_size()

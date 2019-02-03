@@ -8,9 +8,9 @@ class EpsilonGreedyActionChoicer:
         self.__action_size = action_size
         self.__epsilon = epsilon
 
-    def choice_action(self, state, epsilon):
+    def choice_action(self, frames, epsilon):
         if np.random.rand() <= epsilon.value():
             return random.randrange(self.__action_size)
 
-        return self.__model.predict_action(state)
+        return self.__model.predict_action(frames)
 
