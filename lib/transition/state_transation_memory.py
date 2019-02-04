@@ -8,7 +8,7 @@ class StateTransitionMemory:
 
     def add(self, check_point): self.state_transitions.append(check_point)
 
-    def shuffle_indexes(self, batch_size): return np.random.choice(np.arange(self.size()), size=batch_size, replace=False)
+    def shuffle_indexes(self, batch_size): return np.random.choice(np.arange(len(self)), size=batch_size, replace=False)
 
     def __len__(self): return len(self.state_transitions)
 

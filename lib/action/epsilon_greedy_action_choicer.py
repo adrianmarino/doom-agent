@@ -12,5 +12,5 @@ class EpsilonGreedyActionChoicer:
         if np.random.rand() <= epsilon.value():
             return random.randrange(self.__action_size)
 
-        return self.__model.predict_action(frames)
+        return self.__model.predict_action_from_frames(frames)
 

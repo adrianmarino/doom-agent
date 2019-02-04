@@ -11,14 +11,12 @@ class EpsilonValue:
     def value(self): return self.__value
 
     def decrement(self, time):
-        if self.__is_observation_phase(time) or self.__reach_min_value():
+        if self.__reach_min_value():
             return self.__value
 
-        self.__value -= self.delta()
+        self.__value -= self.__delta()
         return self.value()
 
-    def __delta(self): return (self.__initial_value - self.__final_value) / self.explore
-
-    def __is_observation_phase(self, time): return time <= self.__observe_times
+    def __delta(self): return (self.__initial_value - self.__final_value) / self.__explore_times
 
     def __reach_min_value(self): return self.value() < self.__final_value
