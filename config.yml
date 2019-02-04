@@ -4,6 +4,7 @@ env:
     - kills
     - ammo
     - health
+  show: False
 
 net:
   input_shape: (64, 64, 4)
@@ -16,6 +17,7 @@ train:
   checkpoint:
     monitor: loss
     path: ./checkpoints
+  update_target_model_freq: 1000
 
 memory_size: 20000
 
@@ -24,8 +26,8 @@ epsilon:
   final: 0.001
 
 phase_time:
-  observe: 20000
-  explore: 50000
+  observe: 200
+  explore: 1000
 
 metrics:
   path: ./metrics

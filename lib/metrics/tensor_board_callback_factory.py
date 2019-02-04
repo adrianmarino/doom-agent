@@ -1,7 +1,7 @@
 from keras.callbacks import TensorBoard
 
 
-class MetricsBoardFactory:
+class TensorBoardCallbackFactory:
     @staticmethod
     def create(logs_path, batch_size):
         return TensorBoard(
