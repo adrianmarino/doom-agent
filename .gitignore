@@ -111,5 +111,6 @@ venv.bak/
 **/*.cprof
 datasets/
 logs/
-models/
+checkpoints/
+metrics/
 _vizdoom.ini
