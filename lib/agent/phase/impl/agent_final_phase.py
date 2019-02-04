@@ -7,4 +7,4 @@ class AgentFinalPhase:
         self.__agent = agent
 
     def perform(self, time, episode):
-        self.__agent.logger.info(f'Time:{time} - Final - Finish training')
+        self.__agent.logger.info(f'Time:{time} - Episode:{episode} - Phase:Final - Finish training')

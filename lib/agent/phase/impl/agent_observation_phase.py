@@ -8,5 +8,5 @@ class AgentObservationPhase:
 
     def perform(self, time, episode):
         self.__agent.logger.info(
-            f'Time:{time} - Episode:{episode} - Observe - Env:{self.__agent.env.current_state().variables}'
+            f'Time:{time} - Episode:{episode} - Phase:Observe - Env:{self.__agent.env.current_state().variables}'
         )
