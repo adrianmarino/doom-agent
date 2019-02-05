@@ -12,7 +12,7 @@ class CheckpointFactory:
             os.path.join(path, 'weights__loss_{loss:.4f}.h5'),
             monitor=monitor,
             verbose=1,
-            save_best_only=True,
+            save_best_only=False,
             mode='auto'
         )
 

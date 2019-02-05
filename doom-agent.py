@@ -5,13 +5,15 @@ from lib.action.epsilon_value import EpsilonValue
 from lib.agent.agent import Agent
 from lib.environment import Environment
 from lib.logger_factory import LoggerFactory
-from lib.metrics.epsilon_metric_callback import EpsilonMetricUpdateCallback
-from lib.metrics.td_target_metric_update_callback import TDTargetMetricUpdateCallback
+from lib.metric.callback.custom_metric_update_callback import CustomMetricUpdateCallback
+from lib.metric.callback.environment_variable_metric_update_callback import EnvironmentVariableMetricUpdateCallback
+from lib.metric.callback.epsilon_metric_update_callback import EpsilonMetricUpdateCallback
+from lib.metric.callback.td_target_metric_update_callback import TDTargetMetricUpdateCallback
+from lib.metric.tensor_board_callback_factory import TensorBoardCallbackFactory
 from lib.model.image_pre_processor import ImagePreProcessor
 from lib.model.model import create_model, FrameWindowToModelInputConverter
 from lib.rewards.doom_rewards_computation_strategy import DoomRewardsComputationStrategy
 from lib.train.checkpoint_factory import CheckpointFactory
-from lib.metrics.tensor_board_callback_factory import TensorBoardCallbackFactory
 from lib.train.model_train_strategy import ModelTrainStrategy
 from lib.transition.state_transation_memory import StateTransitionMemory
 from lib.util.config import Config
@@ -47,7 +49,7 @@ def create_agent(cfg):
     state_transition_memory = StateTransitionMemory(cfg['memory_size'])
 
     model_train_callbacks = [
-        TensorBoardCallbackFactory.create(cfg['metrics.path'], cfg['train.batch_size']),
+        TensorBoardCallbackFactory.create(cfg['metric.path'], cfg['train.batch_size']),
         CheckpointFactory.create(cfg['train.checkpoint.path'], cfg['train.checkpoint.monitor'])
     ]
 
@@ -65,9 +67,24 @@ def create_agent(cfg):
 
     image_pre_processor = ImagePreProcessor((input_shape.rows, input_shape.cols))
 
-    callbacks = [
-        EpsilonMetricUpdateCallback(cfg['metrics.path']),
-        TDTargetMetricUpdateCallback(cfg['metrics.path'])
+    agent_callbacks = [
+        EpsilonMetricUpdateCallback(cfg['metric.path']),
+        TDTargetMetricUpdateCallback(cfg['metric.path']),
+        EnvironmentVariableMetricUpdateCallback(
+            path=cfg['metric.path'],
+            variable_name='kills',
+            label='kills_count'
+        ),
+        EnvironmentVariableMetricUpdateCallback(
+            path=cfg['metric.path'],
+            variable_name='ammo',
+            label='remaining_ammo'
+        ),
+        EnvironmentVariableMetricUpdateCallback(
+            path=cfg['metric.path'],
+            variable_name='health',
+            label='remaining_health'
+        )
     ]
 
     return Agent(
@@ -85,8 +102,9 @@ def create_agent(cfg):
         cfg['phase_time.explore'],
         cfg['train.freq'],
         cfg['train.update_target_model_freq'],
-        callbacks
+        agent_callbacks
     )
+
 
 if __name__ == "__main__":
     setup_session()

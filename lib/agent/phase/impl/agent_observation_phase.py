@@ -6,7 +6,10 @@ class AgentObservationPhase:
     def __init__(self, agent):
         self.__agent = agent
 
-    def perform(self, time, episode):
+    def on_episode_finish(self, time, episode):
         self.__agent.logger.info(
-            f'Time:{time} - Episode:{episode} - Phase:Observe - Env:{self.__agent.env.current_state().variables}'
+            f'Time:{time} - Episode:{episode} - OBSERVE - Env:{self.__agent.env.previous_state().variables}'
         )
+
+    def each_time(self, time, episode):
+        pass

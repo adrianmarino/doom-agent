@@ -6,5 +6,8 @@ class AgentFinalPhase:
     def __init__(self, agent):
         self.__agent = agent
 
-    def perform(self, time, episode):
-        self.__agent.logger.info(f'Time:{time} - Episode:{episode} - Phase:Final - Finish training')
+    def each_time(self, time, episode):
+        self.__agent.logger.info(f'Time:{time} - Episode:{episode} - END - Finish training')
+
+    def on_episode_finish(self, time, episode):
+        pass

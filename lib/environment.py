@@ -58,8 +58,13 @@ class Environment:
     def __advance_states(self, count):
         self.__game.advance_action(count)
 
+    def previous_state(self):
+        return self.__previous_state
+
     def current_state(self):
-        return EnvironmentState(self.__game.get_state(), self.__variable_names)
+        state = EnvironmentState(self.__game.get_state(), self.__variable_names)
+        self.__previous_state = None if self.is_episode_finished() else state
+        return state
 
     def actions_count(self):
         return self.__game.get_available_buttons_size()

@@ -29,7 +29,7 @@ phase_time:
   observe: 5000
   explore: 50000
 
-metrics:
+metric:
   path: ./metrics
 
 logger:

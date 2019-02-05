@@ -52,12 +52,14 @@ class Agent:
 
     def train(self):
         time = 0
-        episode = self.__new_episode(0)
+        episode = self.__new_episode(time, 0)
         phase = self.__phase_factory.create(self, time)
 
         while not isinstance(phase, AgentFinalPhase):
             if self.env.is_episode_finished():
-                episode = self.__new_episode(episode)
+                self.exec_callbacks(time, episode)
+                phase.on_episode_finish(time, episode)
+                episode = self.__new_episode(time, episode)
                 continue
             self.frame_window.append(self.__current_state_frame())
             initial_state_frames = self.frame_window.frames()
@@ -67,7 +69,9 @@ class Agent:
             rewards = self.env.make_action(action)
 
             if self.env.is_episode_finished():
-                episode = self.__new_episode(episode)
+                self.exec_callbacks(time, episode)
+                phase.on_episode_finish(time, episode)
+                episode = self.__new_episode(time, episode)
                 continue
             self.frame_window.append(self.__current_state_frame())
             final_state_frames = self.frame_window.frames()
@@ -75,11 +79,13 @@ class Agent:
             self.__save_state_transition(action, initial_state_frames, final_state_frames, rewards)
 
             phase = self.__phase_factory.create(self, time)
-            phase.perform(time, episode)
+
+            phase.each_time(time, episode)
+            self.exec_callbacks(time, episode)
 
             time += 1
 
-    def __new_episode(self, episode):
+    def __new_episode(self, time, episode):
         self.env.new_episode()
         self.frame_window.reset()
         return episode + 1

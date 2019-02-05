@@ -7,5 +7,9 @@ class AgentPhase(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def perform(self, time, episode):
+    def each_time(self, time, episode):
+        pass
+
+    @abc.abstractmethod
+    def on_episode_finish(self, time, episode):
         pass
