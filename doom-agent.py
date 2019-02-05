@@ -5,6 +5,8 @@ from lib.action.epsilon_value import EpsilonValue
 from lib.agent.agent import Agent
 from lib.environment import Environment
 from lib.logger_factory import LoggerFactory
+from lib.metrics.epsilon_metric_callback import EpsilonMetricUpdateCallback
+from lib.metrics.td_target_metric_update_callback import TDTargetMetricUpdateCallback
 from lib.model.image_pre_processor import ImagePreProcessor
 from lib.model.model import create_model, FrameWindowToModelInputConverter
 from lib.rewards.doom_rewards_computation_strategy import DoomRewardsComputationStrategy
@@ -63,6 +65,11 @@ def create_agent(cfg):
 
     image_pre_processor = ImagePreProcessor((input_shape.rows, input_shape.cols))
 
+    callbacks = [
+        EpsilonMetricUpdateCallback(cfg['metrics.path']),
+        TDTargetMetricUpdateCallback(cfg['metrics.path'])
+    ]
+
     return Agent(
         env,
         input_shape,
@@ -77,7 +84,8 @@ def create_agent(cfg):
         cfg['phase_time.observe'],
         cfg['phase_time.explore'],
         cfg['train.freq'],
-        cfg['train.update_target_model_freq']
+        cfg['train.update_target_model_freq'],
+        callbacks
     )
 
 if __name__ == "__main__":

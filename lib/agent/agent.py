@@ -36,6 +36,8 @@ class Agent:
             size=input_shape.channels
         )
         self.logger = logger
+        self.train_freq = train_freq
+        self.update_target_model_freq = update_target_model_freq
 
         self.observe_times = observe_times
         self.explore_times = explore_times
@@ -44,8 +46,8 @@ class Agent:
             self,
             self.observe_times,
             self.explore_times,
-            train_freq,
-            update_target_model_freq
+            self.train_freq,
+            self.update_target_model_freq
         )
 
     def train(self):
@@ -76,7 +78,6 @@ class Agent:
             phase.perform(time, episode)
 
             time += 1
-
 
     def __new_episode(self, episode):
         self.env.new_episode()

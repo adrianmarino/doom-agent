@@ -7,7 +7,7 @@ env:
   show: False
 
 net:
-  input_shape: (64, 64, 4)
+  input_shape: (64, 64, 10)
 
 train:
   lr: 0.0001
@@ -17,7 +17,7 @@ train:
   checkpoint:
     monitor: loss
     path: ./checkpoints
-  update_target_model_freq: 1000
+  update_target_model_freq: 3000
 
 memory_size: 20000
 
@@ -26,8 +26,8 @@ epsilon:
   final: 0.001
 
 phase_time:
-  observe: 20000
-  explore: 100000
+  observe: 5000
+  explore: 50000
 
 metrics:
   path: ./metrics

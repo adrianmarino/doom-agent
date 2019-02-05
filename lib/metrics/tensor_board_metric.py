@@ -1,16 +1,24 @@
+import os
 import tensorflow as tf
 
+from lib.util.os_utils import create_directory
+
+
 class SummaryUtils:
-   @staticmethod
-   def create_value(name, value):
-      summary = tf.Summary()
-      summary.value.add(tag=name, simple_value=value)
+    @staticmethod
+    def scalar(name, value):
+        summary = tf.Summary()
+        summary.value.add(tag=name, simple_value=value)
+        return summary
+
 
 class TensorBoardMetric:
-   def __init__(self, path, name):
-      self.name = name
-      self.__writer = tf.summary.FileWriter(path)
+    def __init__(self, path, name):
+        self.name = name
+        create_directory(path)
+        self.__writer = tf.summary.FileWriter(os.path.join(path, name))
 
-   def update(self, value):
-      self.__writer.add_summary(SummaryUtils.create_value(self.name, value))
-      self.__writer.flush()
+    def update(self, value, time):
+        summary = SummaryUtils.scalar(self.name, value)
+        self.__writer.add_summary(summary, time)
+        self.__writer.flush()
