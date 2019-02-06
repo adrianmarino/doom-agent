@@ -47,10 +47,12 @@ class Agent:
             update_target_model_freq
         )
 
+        self.__phase_factory = AgentPhaseFactory()
+
     def train(self):
         self.__ctx.reset()
         self.__ctx.env.new_episode()
-        phase = AgentPhaseFactory.create(self.__ctx)
+        phase = self.__phase_factory.create(self.__ctx)
 
         while not isinstance(phase, AgentFinalPhase):
             if self.__ctx.is_episode_finished():
@@ -70,7 +72,7 @@ class Agent:
 
             self.__save_state_transition(action, initial_state_frames, final_state_frames, rewards)
 
-            phase = AgentPhaseFactory.create(self.__ctx)
+            phase = self.__phase_factory.create(self.__ctx)
             phase.on_each_time(self.__ctx)
 
             self.__exec_callbacks()
