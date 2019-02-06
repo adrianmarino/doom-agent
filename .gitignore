@@ -114,3 +114,4 @@ logs/
 checkpoints/
 metrics/
 _vizdoom.ini
+best_weights/

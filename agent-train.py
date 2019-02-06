@@ -15,14 +15,20 @@ cfg = Config('./config.yml')
 if __name__ == "__main__":
     setup_session()
 
+    rewards_computation_strategy = DoomRewardsComputationStrategy(
+        cfg['hiperparams.rewards.kills'],
+        cfg['hiperparams.rewards.ammo'],
+        cfg['hiperparams.rewards.health']
+    )
+
     env = Environment(
         config_file=cfg['env.config_file'],
         advance_steps=cfg['env.train.advance_steps'],
-        rewards_computation_strategy=DoomRewardsComputationStrategy(),
+        rewards_computation_strategy=rewards_computation_strategy,
         variable_names=cfg['env.variables'],
         window_visible=cfg['env.train.show'],
-        sound_enabled=cfg['env.play.sound']
+        sound_enabled=cfg['env.train.sound']
     )
-    agent = AgentFactory.create(cfg)
+    agent = AgentFactory.create(cfg, env)
 
     agent.train()

@@ -2,13 +2,11 @@ from lib.action.epsilon_greedy_action_choicer import EpsilonGreedyActionResolver
 from lib.action.epsilon_value import EpsilonValue
 from lib.agent.agent import Agent
 from lib.agent.callback.agent_callback_factory import AgentCallbackFactory
-from lib.env.environment import Environment
 from lib.logger_factory import LoggerFactory
 from lib.metric.tensor_board_callback_factory import TensorBoardCallbackFactory
 from lib.model.image_pre_processor import ImagePreProcessor
 from lib.model.model import FrameWindowToModelInputConverter, create_model
 from lib.model.model_train_strategy import ModelTrainStrategy
-from lib.rewards.doom_rewards_computation_strategy import DoomRewardsComputationStrategy
 from lib.transition.state_transation_memory import StateTransitionMemory
 from lib.util.input_shape import InputShape
 

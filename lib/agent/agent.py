@@ -86,7 +86,7 @@ class Agent:
         self.__ctx.env.new_episode()
         phase = self.__phase_factory.create(self.__ctx)
 
-        while self.__ctx.episode <= episodes:
+        while self.__ctx.episode < episodes:
             if self.__ctx.is_episode_finished():
                 self.__new_episode(phase)
                 continue
