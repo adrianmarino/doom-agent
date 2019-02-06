@@ -71,3 +71,6 @@ class ModelWrapper:
             epochs=epochs,
             callbacks=callbacks
         )
+
+    def load(self, path):
+        self.__model.load_weights(path)

@@ -4,7 +4,6 @@ from lib.agent.callback.metric.epsilon_metric_update_callback import EpsilonMetr
 from lib.agent.callback.metric.td_target_metric_update_callback import TDTargetMetricUpdateCallback
 from lib.agent.callback.model.save_model_callback import SaveModelCallback
 
-
 class AgentCallbackFactory:
     def __init__(self, cfg):
         self.cfg = cfg
@@ -16,15 +15,15 @@ class AgentCallbackFactory:
         if 'epsilon' == name:
             return EpsilonMetricUpdateCallback(
                 self.cfg['metric.path'],
-                self.cfg['epsilon.initial'],
-                self.cfg['epsilon.final'],
-                self.cfg['phase_time.explore']
+                self.cfg['hiperparams.epsilon.initial'],
+                self.cfg['hiperparams.epsilon.final'],
+                self.cfg['hiperparams.phase_time.explore']
             )
 
         if 'td_target_update' == name:
             return TDTargetMetricUpdateCallback(
                 self.cfg['metric.path'],
-                self.cfg['train.update_target_model_freq']
+                self.cfg['hiperparams.update_target_model_freq']
             )
 
         if 'kills' == name:
@@ -53,8 +52,8 @@ class AgentCallbackFactory:
 
         if 'save_model' == name:
             return SaveModelCallback(
-                metric_path=self.cfg['train.checkpoint.path'],
-                freq=self.cfg['train.checkpoint.freq']
+                metric_path=self.cfg['checkpoint.path'],
+                freq=self.cfg['checkpoint.freq']
             )
 
         raise Exception(f'Not found {name} callback')

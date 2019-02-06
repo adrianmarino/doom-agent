@@ -1,3 +1,5 @@
+import time
+
 from lib.agent.agent_context import AgentContext
 from lib.agent.frame_window import FrameWindow
 from lib.agent.phase.agent_phase_factory import AgentPhaseFactory
@@ -77,6 +79,26 @@ class Agent:
 
             self.__exec_callbacks()
             self.__ctx.increase_time()
+
+    def play(self, episodes, frame_delay, weights_path):
+        self.__ctx.model.load(weights_path)
+        self.__ctx.reset()
+        self.__ctx.env.new_episode()
+        phase = self.__phase_factory.create(self.__ctx)
+
+        while self.__ctx.episode <= episodes:
+            if self.__ctx.is_episode_finished():
+                self.__new_episode(phase)
+                continue
+            self.__frame_window.append(self.__current_state_frame())
+
+            action = self.__ctx.model.predict_action_from_frames(self.__frame_window.frames())
+            self.__ctx.env.make_action(action)
+
+            phase = self.__phase_factory.create(self.__ctx)
+            phase.on_each_time(self.__ctx)
+            time.sleep(frame_delay)
+
 
     def __resolver_action(self, initial_state_frames):
         return self.__action_resolver.action(initial_state_frames, self.__ctx.epsilon)

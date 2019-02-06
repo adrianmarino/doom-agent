@@ -35,7 +35,7 @@ class AgentContext:
         self.epsilon.decrement()
 
     def is_train_time(self):
-        return self.time % self.train_freq == 0
+        return not self.is_final_time() and self.time % self.train_freq == 0
 
     def is_td_target_update_time(self):
         return self.time % self.update_target_model_freq == 0
