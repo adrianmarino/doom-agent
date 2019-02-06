@@ -3,11 +3,12 @@ from keras import backend as K
 from lib.action.epsilon_greedy_action_choicer import EpsilonGreedyActionResolver
 from lib.action.epsilon_value import EpsilonValue
 from lib.agent.agent import Agent
+from lib.agent.callback.save_model_callback import SaveModelCallback
 from lib.environment import Environment
 from lib.logger_factory import LoggerFactory
-from lib.metric.callback.environment_variable_metric_update_callback import EnvironmentVariableMetricUpdateCallback
-from lib.metric.callback.epsilon_metric_update_callback import EpsilonMetricUpdateCallback
-from lib.metric.callback.td_target_metric_update_callback import TDTargetMetricUpdateCallback
+from lib.agent.callback.metric.environment_variable_metric_update_callback import EnvironmentVariableMetricUpdateCallback
+from lib.agent.callback.metric.epsilon_metric_update_callback import EpsilonMetricUpdateCallback
+from lib.agent.callback.metric.td_target_metric_update_callback import TDTargetMetricUpdateCallback
 from lib.metric.tensor_board_callback_factory import TensorBoardCallbackFactory
 from lib.model.image_pre_processor import ImagePreProcessor
 from lib.model.model import create_model, FrameWindowToModelInputConverter
@@ -48,8 +49,7 @@ def create_agent(cfg):
     state_transition_memory = StateTransitionMemory(cfg['memory_size'])
 
     model_train_callbacks = [
-        TensorBoardCallbackFactory.create(cfg['metric.path'], cfg['train.batch_size']),
-        CheckpointFactory.create(cfg['train.checkpoint.path'], cfg['train.checkpoint.monitor'])
+        TensorBoardCallbackFactory.create(cfg['metric.path'], cfg['train.batch_size'])
     ]
 
     model_train_strategy = ModelTrainStrategy(
@@ -83,6 +83,10 @@ def create_agent(cfg):
             path=cfg['metric.path'],
             variable_name='health',
             label='remaining_health'
+        ),
+        SaveModelCallback(
+            path=cfg['train.checkpoint.path'],
+            freq=cfg['train.checkpoint.freq']
         )
     ]
 

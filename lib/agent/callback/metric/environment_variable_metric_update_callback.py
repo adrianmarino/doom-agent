@@ -1,4 +1,4 @@
-from lib.metric.callback.custom_metric_update_callback import CustomMetricUpdateCallback
+from lib.agent.callback.metric.custom_metric_update_callback import CustomMetricUpdateCallback
 
 
 class EnvironmentVariableMetricUpdateCallback(CustomMetricUpdateCallback):
@@ -6,6 +6,6 @@ class EnvironmentVariableMetricUpdateCallback(CustomMetricUpdateCallback):
         super().__init__(
             path=path,
             label=label,
-            value_resolver=lambda ctx: ctx.previous_state_variables()[variable_name] / ctx.episode,
+            value_resolver=lambda ctx: ctx.previous_state_variables()[variable_name],
             each_episode=True
         )

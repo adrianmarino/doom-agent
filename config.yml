@@ -13,10 +13,10 @@ train:
   lr: 0.0001
   gamma: 0.99
   batch_size: 32
-  freq: 100
+  freq: 5000
   checkpoint:
-    monitor: loss
-    path: ./checkpoints
+    freq: 100
+    path: checkpoints
   update_target_model_freq: 3000
 
 memory_size: 20000

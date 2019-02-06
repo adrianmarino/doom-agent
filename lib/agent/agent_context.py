@@ -63,3 +63,5 @@ class AgentContext:
     def log(self, phase, message):
         self.logger.info(f'Episode:{self.episode} - Time:{self.time} - Phase:{phase} - {message}')
 
+    def is_final_time(self):
+        return self.time == (self.observe_times + self.explore_times)

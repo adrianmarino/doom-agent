@@ -1,4 +1,4 @@
-from lib.agent.agent_callback import AgentCallback
+from lib.agent.callback.agent_callback import AgentCallback
 from lib.metric.tensor_board_metric import TensorBoardMetric
 
 
