@@ -1,15 +1,17 @@
 import logging
 import sys
 from logging.handlers import TimedRotatingFileHandler
-from lib.util.os_utils import create_directory
+
+from lib.util.os_utils import create_file_path
 
 
 class LoggerFactory():
     def __init__(self, config):
         self.__config = config
-        self.__file_path = f'{self.__config["path"]}/{self.__config["name"]}.log'
-        create_directory(self.__config['path'])
-        self.__level = self.__to_logging_level(self.__config['level'])
+        self.__file_path = create_file_path(config['path'], config["name"], 'log')
+        self.__level = self.__to_logging_level(config['level'])
+        self.__fmt = config['message_format']
+        self.__date_fmt = config['date_format']
 
     def create(self):
         logger = logging.getLogger()
@@ -36,8 +38,5 @@ class LoggerFactory():
 
     def __setup_logger_handler(self, handler):
         handler.setLevel(self.__level)
-        handler.setFormatter(logging.Formatter(
-            fmt=self.__config['message_format'],
-            datefmt=self.__config['date_format']
-        ))
+        handler.setFormatter(logging.Formatter(fmt=self.__fmt, datefmt=self.__date_fmt))
         return handler

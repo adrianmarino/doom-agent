@@ -15,3 +15,9 @@ class EpsilonValue:
 
     def value(self):
         return self.__value
+
+    def initial(self):
+        return self.__initial_value
+
+    def final(self):
+        return self.__final_value

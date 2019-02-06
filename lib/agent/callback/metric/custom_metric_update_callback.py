@@ -4,8 +4,8 @@ from lib.metric.tensor_board_metric import TensorBoardMetric
 
 @AgentCallback.register
 class CustomMetricUpdateCallback:
-    def __init__(self, path, label, value_resolver, each_episode=False):
-        self.__metric = TensorBoardMetric(path, label)
+    def __init__(self, metric_path, metric_name, value_resolver, display_name='', description='', each_episode=False):
+        self.__metric = TensorBoardMetric(metric_path, metric_name, display_name, description)
         self.__value_resolver = value_resolver
         self.__each_episode = each_episode
 

@@ -3,17 +3,14 @@ from keras import backend as K
 from lib.action.epsilon_greedy_action_choicer import EpsilonGreedyActionResolver
 from lib.action.epsilon_value import EpsilonValue
 from lib.agent.agent import Agent
-from lib.agent.callback.model.save_model_callback import SaveModelCallback
+from lib.agent.callback.agent_callback_factory import AgentCallbackFactory
 from lib.env.environment import Environment
 from lib.logger_factory import LoggerFactory
-from lib.agent.callback.metric.environment_variable_metric_update_callback import EnvironmentVariableMetricUpdateCallback
-from lib.agent.callback.metric.epsilon_metric_update_callback import EpsilonMetricUpdateCallback
-from lib.agent.callback.metric.td_target_metric_update_callback import TDTargetMetricUpdateCallback
 from lib.metric.tensor_board_callback_factory import TensorBoardCallbackFactory
 from lib.model.image_pre_processor import ImagePreProcessor
 from lib.model.model import create_model, FrameWindowToModelInputConverter
-from lib.rewards.doom_rewards_computation_strategy import DoomRewardsComputationStrategy
 from lib.model.model_train_strategy import ModelTrainStrategy
+from lib.rewards.doom_rewards_computation_strategy import DoomRewardsComputationStrategy
 from lib.transition.state_transation_memory import StateTransitionMemory
 from lib.util.config import Config
 from lib.util.input_shape import InputShape
@@ -47,9 +44,7 @@ def create_agent(cfg):
 
     state_transition_memory = StateTransitionMemory(cfg['memory_size'])
 
-    model_train_callbacks = [
-        TensorBoardCallbackFactory.create(cfg['metric.path'], cfg['train.batch_size'])
-    ]
+    model_train_callbacks = [TensorBoardCallbackFactory.create(cfg['metric.path'], cfg['train.batch_size'])]
 
     model_train_strategy = ModelTrainStrategy(
         model,
@@ -65,29 +60,9 @@ def create_agent(cfg):
 
     image_pre_processor = ImagePreProcessor((input_shape.rows, input_shape.cols))
 
-    agent_callbacks = [
-        EpsilonMetricUpdateCallback(cfg['metric.path']),
-        TDTargetMetricUpdateCallback(cfg['metric.path']),
-        EnvironmentVariableMetricUpdateCallback(
-            path=cfg['metric.path'],
-            variable_name='kills',
-            label='kills_count'
-        ),
-        EnvironmentVariableMetricUpdateCallback(
-            path=cfg['metric.path'],
-            variable_name='ammo',
-            label='remaining_ammo'
-        ),
-        EnvironmentVariableMetricUpdateCallback(
-            path=cfg['metric.path'],
-            variable_name='health',
-            label='remaining_health'
-        ),
-        SaveModelCallback(
-            path=cfg['train.checkpoint.path'],
-            freq=cfg['train.checkpoint.freq']
-        )
-    ]
+    agent_callbacks = AgentCallbackFactory(cfg).create_all(
+        ['epsilon', 'td_target_update', 'kills', 'ammo', 'health', 'save_model']
+    )
 
     return Agent(
         env,
