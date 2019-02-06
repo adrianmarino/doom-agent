@@ -2,9 +2,9 @@ from lib.agent.phase.agent_phase import AgentPhase
 
 
 @AgentPhase.register
-class AgentFinalPhase:
+class AgentObservePhase:
     def on_each_time(self, ctx):
-        ctx.log('Final', 'End training')
+        pass
 
     def on_episode_finish(self, ctx):
-        pass
+        ctx.log('Observe', f'Env:{ctx.previous_state_variables()}')

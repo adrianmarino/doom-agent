@@ -6,6 +6,6 @@ class EpsilonMetricUpdateCallback(CustomMetricUpdateCallback):
         super().__init__(
             path=path,
             label='Epsilon',
-            value_resolver=lambda agent, time, episode: agent.epsilon.value(),
+            value_resolver=lambda ctx: ctx.epsilon_value(),
             each_episode=False
         )

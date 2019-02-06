@@ -5,7 +5,7 @@ class EpsilonValue:
         self.__delta = (initial_value - final_value) / explore_times
         self.reset()
 
-    def decrement(self, time):
+    def decrement(self):
         if self.__value > self.__final_value:
             self.__value -= self.__delta
         return self.__value

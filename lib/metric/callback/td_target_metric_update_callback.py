@@ -8,12 +8,11 @@ class TDTargetMetricUpdateCallback:
         self.__metric = TensorBoardMetric(metric_path, 'TD Target Update')
         self.repeat = 0
 
-    def perform(self, agent, time, episode):
-        value = self.__get_value(agent, time)
-        self.__metric.update(value, time)
+    def perform(self, ctx):
+        self.__metric.update(self.__get_value(ctx), ctx.time)
 
-    def __get_value(self, agent, time):
-        if time % agent.update_target_model_freq == 0:
+    def __get_value(self, ctx):
+        if ctx.is_td_target_update_time():
             self.repeat = 10
 
         if self.repeat > 0:
@@ -23,5 +22,3 @@ class TDTargetMetricUpdateCallback:
             value = 0
 
         return value
-
-

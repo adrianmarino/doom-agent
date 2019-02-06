@@ -9,10 +9,9 @@ class CustomMetricUpdateCallback:
         self.__value_resolver = value_resolver
         self.__each_episode = each_episode
 
-    def perform(self, agent, time, episode):
+    def perform(self, ctx):
         if self.__each_episode:
-            if agent.env.is_episode_finished():
-                self.__metric.update(self.__value_resolver(agent, time, episode), time)
+            if ctx.is_episode_finished():
+                self.__metric.update(self.__value_resolver(ctx), ctx.time)
         else:
-            self.__metric.update(self.__value_resolver(agent, time, episode), time)
-
+            self.__metric.update(self.__value_resolver(ctx), ctx.time)

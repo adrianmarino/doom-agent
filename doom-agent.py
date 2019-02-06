@@ -5,7 +5,6 @@ from lib.action.epsilon_value import EpsilonValue
 from lib.agent.agent import Agent
 from lib.environment import Environment
 from lib.logger_factory import LoggerFactory
-from lib.metric.callback.custom_metric_update_callback import CustomMetricUpdateCallback
 from lib.metric.callback.environment_variable_metric_update_callback import EnvironmentVariableMetricUpdateCallback
 from lib.metric.callback.epsilon_metric_update_callback import EpsilonMetricUpdateCallback
 from lib.metric.callback.td_target_metric_update_callback import TDTargetMetricUpdateCallback

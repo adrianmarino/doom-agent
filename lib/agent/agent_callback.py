@@ -3,5 +3,5 @@ import abc
 
 class AgentCallback(abc.ABC):
     @abc.abstractmethod
-    def perform(self, agent, time, episode):
+    def perform(self, ctx):
         pass

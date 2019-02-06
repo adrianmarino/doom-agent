@@ -6,6 +6,6 @@ class EnvironmentVariableMetricUpdateCallback(CustomMetricUpdateCallback):
         super().__init__(
             path=path,
             label=label,
-            value_resolver=lambda agent, time, episode: agent.env.previous_state().variables[variable_name],
+            value_resolver=lambda ctx: ctx.previous_state_variables()[variable_name] / ctx.episode,
             each_episode=True
         )
