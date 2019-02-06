@@ -15,7 +15,7 @@ train:
   batch_size: 32
   freq: 5000
   checkpoint:
-    freq: 100
+    freq: 5000
     path: checkpoints
   update_target_model_freq: 3000
 
