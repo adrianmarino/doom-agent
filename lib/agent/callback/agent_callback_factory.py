@@ -14,10 +14,18 @@ class AgentCallbackFactory:
 
     def create(self, name):
         if 'epsilon' == name:
-            return EpsilonMetricUpdateCallback(self.cfg['metric.path'])
+            return EpsilonMetricUpdateCallback(
+                self.cfg['metric.path'],
+                self.cfg['epsilon.initial'],
+                self.cfg['epsilon.final'],
+                self.cfg['phase_time.explore']
+            )
 
         if 'td_target_update' == name:
-            return TDTargetMetricUpdateCallback(self.cfg['metric.path'])
+            return TDTargetMetricUpdateCallback(
+                self.cfg['metric.path'],
+                self.cfg['train.update_target_model_freq']
+            )
 
         if 'kills' == name:
             return EnvironmentVariableMetricUpdateCallback(
