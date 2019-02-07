@@ -15,3 +15,4 @@ dependencies:
     - keras
     - pip:
        - git+https://github.com/mwydmuch/ViZDoom
+       - opencv-contrib-python

@@ -8,7 +8,7 @@ class ModelTrainStrategy:
             target_model,
             state_transitions_memory,
             batch_size,
-            time_step_per_train,
+            train_freq,
             input_shape,
             gamma,
             model_input_converter,
@@ -18,7 +18,7 @@ class ModelTrainStrategy:
         self.__model = model
         self.__target_model = target_model
         self.__state_transitions_memory = state_transitions_memory
-        self.__time_step_per_train = time_step_per_train
+        self.__train_freq = train_freq
         self.__input_shape = input_shape
         self.__gamma = gamma
         self.__model_input_converter = model_input_converter
@@ -74,4 +74,4 @@ class ModelTrainStrategy:
         return np.zeros((count,) + self.__input_shape.as_tuple())
 
     def examples_count(self):
-        return min(self.__bach_size * self.__time_step_per_train, len(self.__state_transitions_memory))
+        return min(self.__bach_size * self.__train_freq, len(self.__state_transitions_memory))

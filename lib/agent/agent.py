@@ -99,7 +99,6 @@ class Agent:
             phase.on_each_time(self.__ctx)
             time.sleep(frame_delay)
 
-
     def __resolver_action(self, initial_state_frames):
         return self.__action_resolver.action(initial_state_frames, self.__ctx.epsilon)
 

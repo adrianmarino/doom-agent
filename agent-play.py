@@ -1,3 +1,5 @@
+import argparse
+
 from keras import backend as K
 
 from lib.agent.agent_factory import AgentFactory
@@ -11,10 +13,22 @@ from lib.util.session_builder import SessionBuilder
 def setup_session():
     K.set_session(SessionBuilder().regulate_gpu_memory_use().build())
 
+def params(default_weights_path):
+    parser = argparse.ArgumentParser(description='Play agent')
+    parser.add_argument(
+        '--weights',
+        help='model weights file.',
+        default=default_weights_path
+    )
+
+    return parser.parse_args()
 
 cfg = Config('./config.yml')
 
 if __name__ == "__main__":
+    default_weights_path = last_created_file_from(cfg['checkpoint.path'] + '/*.h5')
+    params = params(default_weights_path)
+
     setup_session()
 
     rewards_computation_strategy = DoomRewardsComputationStrategy(
@@ -33,8 +47,11 @@ if __name__ == "__main__":
     )
     agent = AgentFactory.create(cfg, env)
 
+    print(f'\nweights file: {params.weights}\n')
+
+
     agent.play(
         episodes=3,
         frame_delay=1/8,
-        weights_path = last_created_file_from(cfg['checkpoint.path'] + '/*.h5')
+        weights_path=params.weights
     )
