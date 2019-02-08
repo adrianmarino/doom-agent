@@ -1,6 +1,6 @@
 import argparse
 
-from lib.util.file_utils import last_created_file_from
+from lib.util.os_utils import last_created_file_from
 
 
 class ParamsResolver:

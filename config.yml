@@ -17,19 +17,19 @@ env:
 
 hiperparams:
   input_shape: (64, 64, 4) # Main model input shape (4 images in gray scale) (width, heights, channels).
-  chop_bottom_height: 25 # pixels chapped from bottom of input frame. Used minimize input size.
+  chop_bottom_height: 0 # pixels chapped from bottom of input frame. Used minimize input size.
   lr: 0.0001 # Main model learning rate.
   gamma: 0.99 # Discount factor of TD target calculus.
   batch_size: 32 # Model fit batch size.
   train_freq: 100 # Number of time steps between training interval.
-  update_target_model_freq: 2000 # Number of time steps between  TD Target model weights update.
-  memory_size: 20000 # Number of previous transitions to remember.
+  update_target_model_freq: 3000 # Number of time steps between  TD Target model weights update.
+  memory_size: 50000 # Number of previous transitions to remember.
   epsilon:
     initial: 1.0
     final: 0.001
   phase_time:
-    observe: 20000 # Number of times that epsilon-greedy method select a random action.
-    explore: 150000 # Number of times that epsilon-greedy method select a predicted action(from a neural network).
+    observe: 2000 # Number of times that epsilon-greedy method select a random action.
+    explore: 50000 # Number of times that epsilon-greedy method select a predicted action(from a neural network).
   rewards:
     kills: 1,  # Increase X rewards every time an enemy is killed.
     ammo: -1,  # Decrease X rewards every time a bullet is used.

@@ -3,8 +3,8 @@ from lib.action.epsilon_value import EpsilonValue
 from lib.agent.agent import Agent
 from lib.agent.callback.agent_callback_factory import AgentCallbackFactory
 from lib.logger_factory import LoggerFactory
-from lib.metric.tensor_board_callback_factory import TensorBoardCallbackFactory
 from lib.model.callback.checkpoint_callback_factory import CheckpointCallbackFactory
+from lib.model.callback.tensor_board_callback_factory import TensorBoardCallbackFactory
 from lib.model.image_pre_processor import ImagePreProcessor
 from lib.model.model import FrameWindowToModelInputConverter, create_model
 from lib.model.model_fit_strategy import ModelFitStrategy
