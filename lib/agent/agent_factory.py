@@ -20,8 +20,8 @@ class AgentFactory:
         input_shape = InputShape.from_str(cfg['hiperparams.input_shape'])
 
         input_converter = FrameWindowToModelInputConverter()
-        model = create_model(input_shape, env.actions_count(), cfg['hiperparams.lr'], input_converter)
-        target_model = create_model(input_shape, env.actions_count(), cfg['hiperparams.lr'], input_converter)
+        model = create_model(input_shape, env.actions_count(), cfg['hiperparams.lr'], input_converter, logger)
+        target_model = create_model(input_shape, env.actions_count(), cfg['hiperparams.lr'], input_converter, logger)
 
         epsilon = EpsilonValue(
             cfg['hiperparams.epsilon.initial'],
@@ -49,7 +49,11 @@ class AgentFactory:
             model_train_callbacks
         )
 
-        image_pre_processor = ImagePreProcessor((input_shape.rows, input_shape.cols))
+        image_pre_processor = ImagePreProcessor(
+            input_shape.rows,
+            input_shape.cols,
+            cfg['hiperparams.chop_bottom_height']
+        )
 
         agent_callbacks = AgentCallbackFactory(cfg).create_all(
             ['epsilon', 'td_target_update', 'kills', 'ammo', 'health', 'save_model']

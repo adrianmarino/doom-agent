@@ -53,7 +53,7 @@ class ModelTrainStrategy:
         history = self.__model.fit(
             start_states,
             actions_q_values,
-            batch_size=samples_count,
+            batch_size=self.__bach_size,
             callbacks=self.__callbacks
         )
 

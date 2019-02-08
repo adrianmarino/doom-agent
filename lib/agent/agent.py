@@ -51,7 +51,8 @@ class Agent:
 
         self.__phase_factory = AgentPhaseFactory()
 
-    def train(self):
+    def train(self, weights_path):
+        self.__ctx.model.load(weights_path)
         self.__ctx.reset()
         self.__ctx.env.new_episode()
         phase = self.__phase_factory.create(self.__ctx)
@@ -125,3 +126,4 @@ class Agent:
 
     def __exec_callbacks(self):
         [callback.perform(self.__ctx) for callback in self.__callbacks]
+

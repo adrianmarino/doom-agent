@@ -8,7 +8,8 @@ def create_model(
         input_shape,
         action_size,
         learning_rate,
-        input_converter
+        input_converter,
+        logger
 ):
     model = Sequential()
 
@@ -31,7 +32,7 @@ def create_model(
 
     model.compile(loss='mse', optimizer=optimizer)
 
-    return ModelWrapper(model, input_converter)
+    return ModelWrapper(model, input_converter, logger)
 
 
 class FrameWindowToModelInputConverter:
@@ -42,9 +43,10 @@ class FrameWindowToModelInputConverter:
 
 
 class ModelWrapper:
-    def __init__(self, model, input_converter):
+    def __init__(self, model, input_converter, logger):
         self.__model = model
         self.__input_converter = input_converter
+        self.__logger = logger
 
     def predict_action_from_frames(self, frames):
         model_input = self.__input_converter.convert(frames)
@@ -73,4 +75,6 @@ class ModelWrapper:
         )
 
     def load(self, path):
-        self.__model.load_weights(path)
+        if path:
+            self.__logger.info(f'Load weights from {path}')
+            self.__model.load_weights(path)
