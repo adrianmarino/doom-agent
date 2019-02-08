@@ -5,7 +5,7 @@ from keras.callbacks import ModelCheckpoint
 from lib.util.os_utils import create_path
 
 
-class CheckpointFactory:
+class CheckpointCallbackFactory:
     @staticmethod
     def create(path, monitor='loss'):
         return ModelCheckpoint(

@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class ModelTrainStrategy:
+class ModelFitStrategy:
     def __init__(
             self,
             model,
