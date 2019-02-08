@@ -1,9 +1,8 @@
-from lib.env.environment import Environment
-
 from lib.agent.agent_factory import AgentFactory
+from lib.env.environment import Environment
+from lib.env.reward.doom_rewards_computation_strategy import DoomRewardsComputationStrategy
 from lib.k_session_setup import setup_session
 from lib.params_resolver import ParamsResolver
-from lib.rewards.doom_rewards_computation_strategy import DoomRewardsComputationStrategy
 from lib.util.config import Config
 
 cfg = Config('./config.yml')
