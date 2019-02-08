@@ -4,6 +4,7 @@ from lib.agent.agent import Agent
 from lib.agent.callback.agent_callback_factory import AgentCallbackFactory
 from lib.logger_factory import LoggerFactory
 from lib.metric.tensor_board_callback_factory import TensorBoardCallbackFactory
+from lib.model.checkpoint_factory import CheckpointFactory
 from lib.model.image_pre_processor import ImagePreProcessor
 from lib.model.model import FrameWindowToModelInputConverter, create_model
 from lib.model.model_train_strategy import ModelTrainStrategy
@@ -34,7 +35,8 @@ class AgentFactory:
         state_transition_memory = StateTransitionMemory(cfg['hiperparams.memory_size'])
 
         model_train_callbacks = [
-            TensorBoardCallbackFactory.create(cfg['metric.path'], cfg['hiperparams.batch_size'])
+            TensorBoardCallbackFactory.create(cfg['metric.path'], cfg['hiperparams.batch_size']),
+            CheckpointFactory.create(cfg['checkpoint.path'], 'loss')
         ]
 
         model_train_strategy = ModelTrainStrategy(
@@ -56,7 +58,7 @@ class AgentFactory:
         )
 
         agent_callbacks = AgentCallbackFactory(cfg).create_all(
-            ['epsilon', 'td_target_update', 'kills', 'ammo', 'health', 'save_model']
+            ['epsilon', 'td_target_update', 'kills', 'ammo', 'health']  # , 'save_model']
         )
 
         return Agent(

@@ -114,6 +114,6 @@ logs/
 checkpoints/
 metrics/
 _vizdoom.ini
-best_weights/
+test_weights/
 
 .~lock.*
