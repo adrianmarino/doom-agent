@@ -25,7 +25,7 @@ def build_results(cfg):
     time = str_time()
     weights_file = cp_best_weights_to_reports_path(time)
     report = AgentReportFactory.json_report(cfg, weights_file)
-    write_report(cfg['report.path'], report, str_time, 'json')
+    write_report(cfg['report.path'], report, time, 'json')
     print(report)
 
 

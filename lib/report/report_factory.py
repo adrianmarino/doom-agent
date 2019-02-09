@@ -10,6 +10,7 @@ class AgentReportFactory:
             cfg['metric.path'],
             cfg['env.variables'],
             cfg['hiperparams'],
-            weights_file
+            weights_file,
+            cfg['report.last_times']
         )
         return report.format_to(PrettyJsonFormatter())
