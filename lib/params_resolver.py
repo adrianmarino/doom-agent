@@ -5,30 +5,30 @@ from lib.model.model_utils import get_best_weights_file_from
 
 class ParamsResolver:
     def __init__(self, cfg, description):
-        self.__default_weights_path = get_best_weights_file_from(cfg['checkpoint.path'])
-        self.__play_episodes = cfg['env.play.episodes']
-        self.__frame_delay = cfg['env.play.frame_delay']
         self.__parser = argparse.ArgumentParser(description=description)
 
-    def resolver(self):
+        default_weights_path = get_best_weights_file_from(cfg['checkpoint.path'])
         self.__parser.add_argument(
             '--weights',
-            help='model weights file.',
-            default=self.__default_weights_path
+            help=f'Model weights file. As default get best loss weights file if exists. Default value: {default_weights_path}',
+            default=default_weights_path
         )
 
+        episodes = cfg['env.play.episodes']
         self.__parser.add_argument(
             '--episodes',
-            help='Number of episodes to play.',
-            default=self.__play_episodes
+            help=f'Number of episodes to play. Default value: {episodes}.',
+            default=episodes
         )
 
+        frame_delay = cfg['env.play.frame_delay']
         self.__parser.add_argument(
             '--frame-delay',
-            help='Delay time between frames',
-            default=self.__frame_delay
+            help=f'Delay time between frames when play agent. Default value: {frame_delay}.',
+            default=frame_delay
         )
 
+    def resolver(self):
         return self.__params(self.__parser)
 
     @staticmethod

@@ -62,13 +62,13 @@ python agent-play.py params
 * Train agent:
 
 ```bash
-agent-train --weights a_weights_file (optional)
+agent-train [--weights a_weights_file]
 ```
 
-* Train agent:
+* Play agent:
 
 ```bash
-agent-train --weights a_weights_file (optional)
+agent-play --weights reports/a_weights_file
 ```
 
 * To view all options:
