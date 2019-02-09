@@ -1,5 +1,5 @@
 from lib.agent.callback.agent_callback import AgentCallback
-from lib.metric.tensor_board_metric import TensorBoardMetric
+from lib.metric.tensor_board_metric_writer import TensorBoardMetricWriter
 
 
 @AgentCallback.register
@@ -12,7 +12,7 @@ train.update_target_model_freq property.
 Updated every {update_target_model_freq} times.
 """
 
-        self.__metric = TensorBoardMetric(
+        self.__metric = TensorBoardMetricWriter(
             metric_path=metric_path,
             metric_name='td_target_update',
             display_name='TD Target Model Update',
@@ -21,7 +21,7 @@ Updated every {update_target_model_freq} times.
         self.repeat = 0
 
     def perform(self, ctx):
-        self.__metric.update(self.__get_value(ctx), ctx.time)
+        self.__metric.write(self.__get_value(ctx), ctx.time)
 
     def __get_value(self, ctx):
         if ctx.is_td_target_update_time():

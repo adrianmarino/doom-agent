@@ -11,9 +11,9 @@ env:
   play:
     show: True
     sound: True
-    advance_steps: 1 # Number of frames to advance environment after apply an action to this.
+    advance_steps: 2 # Number of frames to advance environment after apply an action to this.
     episodes: 3
-    frame_delay: 0.125
+    frame_delay: 0.25
 
 hiperparams:
   input_shape: (64, 64, 4) # Main model input shape (4 images in gray scale) (width, heights, channels).
@@ -31,9 +31,9 @@ hiperparams:
     observe: 2000 # Number of times that epsilon-greedy method select a random action.
     explore: 50000 # Number of times that epsilon-greedy method select a predicted action(from a neural network).
   rewards:
-    kills: 3,  # Increase X reward every time an enemy is killed.
-    ammo: -1,  # Decrease X reward every time a bullet is used.
-    health: -1 # Decrease X reward every time health level goes down.
+    kills: 1.8,  # Increase X reward every time an enemy is killed.
+    ammo: -1.3,  # Decrease X reward every time a bullet is used.
+    health: -1.6 # Decrease X reward every time health level goes down.
 
 checkpoint:
   freq: 5000 # Save model weights every X times.

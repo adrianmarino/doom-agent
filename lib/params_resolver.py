@@ -1,11 +1,11 @@
 import argparse
 
-from lib.util.os_utils import last_created_file_from
+from lib.model.model_utils import get_best_weights_file_from
 
 
 class ParamsResolver:
     def __init__(self, cfg, description):
-        self.__default_weights_path = last_created_file_from(cfg['checkpoint.path'] + '/*.h5')
+        self.__default_weights_path = get_best_weights_file_from(cfg['checkpoint.path'])
         self.__play_episodes = cfg['env.play.episodes']
         self.__frame_delay = cfg['env.play.frame_delay']
         self.__parser = argparse.ArgumentParser(description=description)

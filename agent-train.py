@@ -1,7 +1,10 @@
+from tensorboard.backend.event_processing.event_file_inspector import print_dict
+
 from lib.agent.agent_factory import AgentFactory
 from lib.env.environment import Environment
 from lib.env.reward.doom_rewards_computation_strategy import DoomRewardsComputationStrategy
 from lib.k_session_setup import setup_session
+from lib.metric.metric_utils import train_metrics_summary
 from lib.params_resolver import ParamsResolver
 from lib.util.config import Config
 
@@ -25,3 +28,9 @@ env = Environment(
 AgentFactory \
     .create(cfg, env) \
     .train(weights_path=params['weights'])
+
+print_dict(train_metrics_summary(
+    cfg['checkpoint.path'],
+    cfg['metric.path'],
+    cfg['env.variables']
+))

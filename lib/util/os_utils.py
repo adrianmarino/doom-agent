@@ -1,3 +1,4 @@
+import glob
 import os
 
 
@@ -10,10 +11,10 @@ def create_path(path):
 def create_file_path(path, filename, ext=''):
     return os.path.join(create_path(path), f'{filename}{"." if ext else ""}{ext}')
 
-
-def last_created_file_from(path):
+def min_file_path_from(path, min_func):
     try:
-        latest_file = max(path, key=os.path.getctime)
+        list_of_files = glob.glob(path)
+        latest_file = min(list_of_files, key=min_func)
         return latest_file
     except:
         return None
