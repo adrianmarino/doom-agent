@@ -9,6 +9,7 @@ class AgentContext:
             logger,
             observe_times,
             explore_times,
+            train_times,
             train_freq,
             update_target_model_freq
     ):
@@ -22,6 +23,7 @@ class AgentContext:
         self.update_target_model_freq = update_target_model_freq
         self.observe_times = observe_times
         self.explore_times = explore_times
+        self.train_times = train_times
         self.reset()
 
     def reset(self):
@@ -64,4 +66,4 @@ class AgentContext:
         self.logger.info(f'Episode:{self.episode} - Time:{self.time} - Phase:{phase} - {message}')
 
     def is_final_time(self):
-        return self.time == (self.observe_times + self.explore_times)
+        return self.time == (self.observe_times + self.explore_times + self.train_times)

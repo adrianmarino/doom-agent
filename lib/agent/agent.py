@@ -22,6 +22,7 @@ class Agent:
             logger,
             observe_times,
             explore_times,
+            train_times,
             train_freq,
             update_target_model_freq,
             callbacks=()
@@ -45,6 +46,7 @@ class Agent:
             logger,
             observe_times,
             explore_times,
+            train_times,
             train_freq,
             update_target_model_freq
         )

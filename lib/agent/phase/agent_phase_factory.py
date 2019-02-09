@@ -14,9 +14,9 @@ class AgentPhaseFactory:
     def create(self, ctx):
         if ctx.time <= ctx.observe_times:
             return self.__observe_phase
-        elif ctx.observe_times < ctx.time <= (ctx.observe_times + ctx.explore_times):
+        elif ctx.observe_times < ctx.time <= (ctx.observe_times + ctx.explore_times + ctx.train_times):
             return self.__explore_phase
-        elif ctx.time > (ctx.observe_times + ctx.explore_times):
+        elif ctx.time > (ctx.observe_times + ctx.explore_times + ctx.train_times):
             return self.__final_phase
         else:
             return self.__play_phase

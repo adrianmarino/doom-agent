@@ -74,6 +74,7 @@ class AgentFactory:
             logger,
             cfg['hiperparams.phase_time.observe'],
             cfg['hiperparams.phase_time.explore'],
+            cfg['hiperparams.phase_time.train'],
             cfg['hiperparams.train_freq'],
             cfg['hiperparams.update_target_model_freq'],
             agent_callbacks

@@ -9,7 +9,7 @@ class CheckpointCallbackFactory:
     @staticmethod
     def create(path, monitor='loss'):
         return ModelCheckpoint(
-            os.path.join(create_path(path), 'weights__loss_{loss:.4f}.h5'),
+            os.path.join(create_path(path), 'weights-loss_{loss:.4f}.h5'),
             monitor=monitor,
             verbose=1,
             save_best_only=True,
