@@ -28,6 +28,7 @@ or forget use it creating a bash/zsh alias:
 echo -e "export PATH=.:\$PATH" >> ~/.bashrc
 echo "alias agent-train='conda activate doom-agent;rm -rf logs metrics checkpoints; python agent-train.py'" >> ~/.bashrc
 echo "alias agent-play='conda activate doom-agent;python agent-play.py'" >> ~/.bashrc
+echo "alias agent-report='conda activate doom-agent;python report.py'" >> ~/.bashrc
 echo "alias agent-metrics='conda activate doom-agent; tensorboard --logdir metrics'" >> ~/.bashrc
 source ~/.bashrc
 ```
@@ -37,6 +38,7 @@ source ~/.bashrc
 echo -e "export PATH=.:\$PATH" >> ~/.zshrc
 echo "alias agent-train='conda activate doom-agent;rm -rf logs metrics checkpoints; python agent-train.py'" >> ~/.zshrc
 echo "alias agent-play='conda activate doom-agent;python agent-play.py'" >> ~/.zshrc
+echo "alias agent-report='conda activate doom-agent;python report.py'" >> ~/.zshrc
 echo "alias agent-metrics='conda activate doom-agent; tensorboard --logdir metrics'" >> ~/.zshrc
 source ~/.zshrc
 ```

@@ -20,11 +20,11 @@ class AgentMetricReport:
         data['weights'] = self.__weights_file
         data['metrics'] = OrderedDict()
         for name, reader in self.__reader.items():
-            values = list(reader.read())
+            values = list(reader.read())[:-100]
             data['metrics'][name] = {
                 'mean': mean(reader.read()),
                 'count': len(values),
-                'values': sorted([{'value': value, 'occurs': values.count(value)} for value in set(values)],
+                'values': sorted([{'occurs': values.count(value), 'value': value} for value in set(values)],
                                  key=lambda it: it['occurs'], reverse=True)
             }
         data['loss']: best_loss(self.__checkpoint_path)
