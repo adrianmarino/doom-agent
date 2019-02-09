@@ -13,39 +13,45 @@ from lib.util.os_utils import create_file_path
 from lib.util.time_utils import str_time
 
 
-def cp_best_weights_to_reports_path():
+def cp_best_weights_to_reports_path(time):
     best_weights_file = get_best_weights_file_from(cfg['checkpoint.path'])
     loss = get_loss_model_weights_path(best_weights_file)
-    copyfile(
-        best_weights_file,
-        create_file_path(cfg['report.path'], f'{str_time}-weights-loss_{loss}', 'h5')
+    result_path = create_file_path(cfg['report.path'], f'{time}-weights-loss_{loss}', 'h5')
+    copyfile(best_weights_file, result_path)
+    return result_path
+
+
+def build_results(cfg):
+    time = str_time()
+    weights_file = cp_best_weights_to_reports_path(time)
+    report = AgentReportFactory.json_report(cfg, weights_file)
+    write_report(cfg['report.path'], report, str_time, 'json')
+    print(report)
+
+
+if __name__ == "__main__":
+    setup_session()
+    cfg = Config('./config.yml')
+    params = ParamsResolver(cfg, description="Train Doom Agent").resolver()
+
+    # Builder agent...
+    rewards_computation_strategy = DoomRewardsComputationStrategy(
+        cfg['hiperparams.rewards.kills'],
+        cfg['hiperparams.rewards.ammo'],
+        cfg['hiperparams.rewards.health']
     )
+    env = Environment(
+        config_file=cfg['env.config_file'],
+        advance_steps=cfg['env.train.advance_steps'],
+        rewards_computation_strategy=rewards_computation_strategy,
+        variable_names=cfg['env.variables'],
+        window_visible=cfg['env.train.show'],
+        sound_enabled=cfg['env.train.sound']
+    )
+    agent = AgentFactory.create(cfg, env)
 
+    # Train model and generate weights files under checkpoint path...
+    agent.train(weights_path=params['weights'])
 
-cfg = Config('./config.yml')
-params = ParamsResolver(cfg, description="Train Doom Agent").resolver()
-setup_session()
-
-rewards_computation_strategy = DoomRewardsComputationStrategy(
-    cfg['hiperparams.rewards.kills'],
-    cfg['hiperparams.rewards.ammo'],
-    cfg['hiperparams.rewards.health']
-)
-env = Environment(
-    config_file=cfg['env.config_file'],
-    advance_steps=cfg['env.train.advance_steps'],
-    rewards_computation_strategy=rewards_computation_strategy,
-    variable_names=cfg['env.variables'],
-    window_visible=cfg['env.train.show'],
-    sound_enabled=cfg['env.train.sound']
-)
-AgentFactory \
-    .create(cfg, env) \
-    .train(weights_path=params['weights'])
-
-str_time = str_time()
-report = AgentReportFactory.json_report(cfg)
-
-cp_best_weights_to_reports_path()
-write_report(cfg['report.path'], report, str_time, 'json')
-print(report)
+    # Generate report file...
+    build_results(cfg)
