@@ -1,6 +1,6 @@
 #  Reinforment learning Doom Agent
 
-A DDQN reinforcement learning agent that can learn to play doom under a level.
+A DDQN reinforcement learning agent that can learn to play doom under a level. The idea is kill largest amount of enemies in a episode.
 
 ## Requeriments
 
@@ -62,11 +62,11 @@ python agent-train.py params
 * Train agent:
 
 ```bash
-agent-train [--weights a_weights_file]
+agent-train
 ```
 Note: When train process finish you can see report/weights_file under reports path.
 
-* See evolution of train process:
+* See evolution of train process loading tensor board:
 ```bash
 agent-metrics
 ```
@@ -75,19 +75,12 @@ After go to dash: http://localhost:6006
 * Play agent:
 
 ```bash
-agent-play --weights reports/a_weights_file
+agent-play --weights best_2019_02_09_17_19_52-weights-loss_0.0123.h5
 ```
 
 * To view all options:
 
 ```bash
-agent-train/play --help
-```
-
-
-## Metrics
-
-Run tensorboard to see metrics dash
-```bash
-tensorboard --logdir metrics
+agent-train --help
+agent-play --help
 ```
