@@ -22,7 +22,7 @@ class AgentMetricReport:
         for name, reader in self.__reader.items():
             values = list(reader.read())[:-100]
             data['metrics'][name] = {
-                'mean': mean(reader.read()),
+                'mean': mean(values),
                 'count': len(values),
                 'values': sorted([{'occurs': values.count(value), 'value': value} for value in set(values)],
                                  key=lambda it: it['occurs'], reverse=True)
