@@ -5,7 +5,7 @@ A DDQN reinforcement learning agent that can learn to play doom under a level.
 ## Requeriments
 
 * conda
-* A respectable video card (i.e. GeForce GTX 1060 or higher)
+* A GPU can improve trainig times: Is required that nvidia module is loaded.
 
 ## Setup
 
