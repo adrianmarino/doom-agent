@@ -13,7 +13,7 @@ env:
     sound: True
     advance_steps: 2 # Number of frames to advance environment after apply an stategy to this.
     episodes: 3
-    frame_delay: 0.25
+    frame_delay: 0.2
 
 hiperparams:
   input_shape: (64, 64, 4) # Main model input shape (4 images in gray scale) (width, heights, channels).
