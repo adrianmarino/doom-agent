@@ -26,6 +26,7 @@ or forget use it creating a bash/zsh alias:
 echo -e "export PATH=.:\$PATH" >> ~/.bashrc
 echo "alias agent-train='conda activate doom-agent;rm -rf logs metrics checkpoints; python agent-train.py'" >> ~/.bashrc
 echo "alias agent-play='conda activate doom-agent;python agent-play.py'" >> ~/.bashrc
+echo "alias agent-metrics='conda activate doom-agent; tensorboard --logdir metrics'" >> ~/.bashrc
 source ~/.bashrc
 ```
 
@@ -34,13 +35,14 @@ source ~/.bashrc
 echo -e "export PATH=.:\$PATH" >> ~/.zshrc
 echo "alias agent-train='conda activate doom-agent;rm -rf logs metrics checkpoints; python agent-train.py'" >> ~/.zshrc
 echo "alias agent-play='conda activate doom-agent;python agent-play.py'" >> ~/.zshrc
+echo "alias agent-metrics='conda activate doom-agent; tensorboard --logdir metrics'" >> ~/.zshrc
 source ~/.zshrc
 ```
 
 with this you can use object detector as a regular command in the following way:
 
 ```bash
-agent-train/play params
+agent-train params
 ```
 
 instead of:
@@ -51,12 +53,6 @@ rm -rf logs metrics checkpoints
 python agent-train.py params
 ```
 
-or
-
-```bash
-conda activate doom-agent
-python agent-play.py params
-
 ## Use
 
 * Train agent:
@@ -64,6 +60,13 @@ python agent-play.py params
 ```bash
 agent-train [--weights a_weights_file]
 ```
+
+* See runtime train metrics:
+
+```bash
+agent-metrics
+```
+and go to http://localhost:6006
 
 * Play agent:
 
@@ -75,4 +78,12 @@ agent-play --weights reports/a_weights_file
 
 ```bash
 agent-train/play --help
+```
+
+
+## Metrics
+
+Run tensorboard to see metrics dash
+```bash
+tensorboard --logdir metrics
 ```
