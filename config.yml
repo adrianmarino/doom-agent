@@ -10,10 +10,10 @@ env:
     advance_steps: 4 # Number of frames to advance environment after apply an stategy to this.
   play:
     show: True
-    sound: True
-    advance_steps: 2 # Number of frames to advance environment after apply an stategy to this.
-    episodes: 3
-    frame_delay: 0.2
+    sound: False
+    advance_steps: 4 # Number of frames to advance environment after apply an stategy to this.
+    episodes: 20
+    frame_delay: 0.05
 
 hiperparams:
   input_shape: (64, 64, 4) # Main model input shape (4 images in gray scale) (width, heights, channels).
