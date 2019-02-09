@@ -1,4 +1,6 @@
-#  RL Doom Agent
+#  Reinforment learning Doom Agent
+
+A DDQN reinforcement learning agent that can learn to play doom under a level.
 
 ## Requeriments
 
@@ -60,13 +62,13 @@ python agent-train.py params
 ```bash
 agent-train [--weights a_weights_file]
 ```
+Note: When train process finish you can see report/weights_file under reports path.
 
-* See runtime train metrics:
-
+* See evolution of train process:
 ```bash
 agent-metrics
 ```
-and go to http://localhost:6006
+After go to dash: http://localhost:6006
 
 * Play agent:
 
