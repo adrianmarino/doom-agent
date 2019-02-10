@@ -11,7 +11,7 @@ class AgentContext:
             explore_times,
             train_times,
             train_freq,
-            update_target_model_freq
+            td_target_update_freq_resolver
     ):
         self.env = env
         self.model = model
@@ -20,7 +20,7 @@ class AgentContext:
         self.epsilon = epsilon
         self.logger = logger
         self.train_freq = train_freq
-        self.update_target_model_freq = update_target_model_freq
+        self.td_target_update_freq_resolver = td_target_update_freq_resolver
         self.observe_times = observe_times
         self.explore_times = explore_times
         self.train_times = train_times
@@ -40,7 +40,7 @@ class AgentContext:
         return not self.is_final_time() and self.time % self.train_freq == 0
 
     def is_td_target_update_time(self):
-        return self.time % self.update_target_model_freq == 0
+        return self.time % self.td_target_update_freq_resolver.resolve(self.time) == 0
 
     def train_model(self):
         self.model_train_strategy.train()

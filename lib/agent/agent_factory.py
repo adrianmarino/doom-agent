@@ -2,6 +2,7 @@ from lib.action.epsilon_greedy_action_choicer import EpsilonGreedyActionResolver
 from lib.action.epsilon_value import EpsilonValue
 from lib.agent.agent import Agent
 from lib.agent.callback.agent_callback_factory import AgentCallbackFactory
+from lib.model.td_target_update_freq_resolver import TDTargetUpdateFreqResolver
 from lib.logger_factory import LoggerFactory
 from lib.model.callback.checkpoint_callback_factory import CheckpointCallbackFactory
 from lib.model.callback.tensor_board_callback_factory import TensorBoardCallbackFactory
@@ -61,6 +62,10 @@ class AgentFactory:
             ['epsilon', 'td_target_update', 'kills', 'ammo', 'health']  # , 'save_model']
         )
 
+        td_target_update_freq_resolver = TDTargetUpdateFreqResolver(
+            cfg['hiperparams.update_target_model_freq_schedule']
+        )
+
         return Agent(
             env,
             input_shape,
@@ -76,6 +81,6 @@ class AgentFactory:
             cfg['hiperparams.phase_time.explore'],
             cfg['hiperparams.phase_time.train'],
             cfg['hiperparams.train_freq'],
-            cfg['hiperparams.update_target_model_freq'],
+            td_target_update_freq_resolver,
             agent_callbacks
         )

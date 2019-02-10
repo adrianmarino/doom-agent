@@ -10,10 +10,10 @@ env:
     advance_steps: 4 # Number of frames to advance environment after apply an stategy to this.
   play:
     show: True
-    sound: False
+    sound: True
     advance_steps: 4 # Number of frames to advance environment after apply an stategy to this.
     episodes: 20
-    frame_delay: 0.05
+    frame_delay: 0.1
 
 hiperparams:
   input_shape: (64, 64, 4) # Main model input shape (4 images in gray scale) (width, heights, channels).
@@ -22,7 +22,10 @@ hiperparams:
   gamma: 0.99 # Discount factor of TD target calculus.
   batch_size: 16 # Model fit batch size.
   train_freq: 100 # Number of time steps between training interval.
-  update_target_model_freq: 2000 # Number of time steps between  TD Target model weights update.
+  update_target_model_freq_schedule: # Number of time steps between each TD Target model weights update.
+    -
+      from_time: 0 # Initially update each 900 times.
+      freq: 3000
   memory_size: 50000 # Number of previous transitions to remember.
   epsilon:
     initial: 1.0
@@ -30,7 +33,7 @@ hiperparams:
   phase_time:
     observe: 2000 # Number of times that epsilon-greedy method select a random stategy.
     explore: 50000 # Number of times that epsilon-greedy method select a predicted stategy(from a neural network).
-    train: 5000
+    train: 0
   rewards:
     kills: 1.5  # Increase X reward every time an enemy is killed.
     ammo: -1.2  # Decrease X reward every time a bullet is used.

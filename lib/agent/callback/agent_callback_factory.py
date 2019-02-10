@@ -23,7 +23,7 @@ class AgentCallbackFactory:
         if 'td_target_update' == name:
             return TDTargetMetricUpdateCallback(
                 self.cfg['metric.path'],
-                self.cfg['hiperparams.update_target_model_freq']
+                self.cfg['hiperparams.update_target_model_freq_schedule']
             )
 
         if 'kills' == name:

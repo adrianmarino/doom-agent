@@ -4,12 +4,12 @@ from lib.metric.tensor_board_metric_writer import TensorBoardMetricWriter
 
 @AgentCallback.register
 class TDTargetMetricUpdateCallback:
-    def __init__(self, metric_path, update_target_model_freq):
+    def __init__(self, metric_path, update_target_model_freq_schedule):
         description = f"""
 See time when TD Target model weights were updated 
 from main model weights (See: DDQN). Configured with 
 train.update_target_model_freq property. 
-Updated every {update_target_model_freq} times.
+TD target is updated by next schedule(time vs. freq): {update_target_model_freq_schedule}.
 """
 
         self.__metric = TensorBoardMetricWriter(

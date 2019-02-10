@@ -24,7 +24,7 @@ class Agent:
             explore_times,
             train_times,
             train_freq,
-            update_target_model_freq,
+            td_target_update_freq_resolver,
             callbacks=()
     ):
         self.__action_resolver = action_resolver
@@ -48,7 +48,7 @@ class Agent:
             explore_times,
             train_times,
             train_freq,
-            update_target_model_freq
+            td_target_update_freq_resolver
         )
 
         self.__phase_factory = AgentPhaseFactory()
