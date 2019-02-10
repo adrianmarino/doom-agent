@@ -34,7 +34,7 @@ hiperparams:
   rewards:
     kills: 1.5  # Increase X reward every time an enemy is killed.
     ammo: -1.2  # Decrease X reward every time a bullet is used.
-    health: -1.5 # Decrease X reward every time health level goes down.
+    health: -1 # Decrease X reward every time health level goes down.
 
 checkpoint:
   freq: 5000 # Save model weights every X times.
