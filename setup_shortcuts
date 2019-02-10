@@ -1,0 +1,35 @@
+#!/bin/bash
+# ======================================================================================================================
+# Variables
+# ======================================================================================================================
+# Commands
+ENV_ACTIVATE="conda activate doom-agent"
+REMOVE_TRAIN_FILES="rm -rf logs metrics checkpoints"
+TRAIN="$ENV_ACTIVATE; python agent-train.py"
+PLAY="$ENV_ACTIVATE; python agent-play.py"
+REPORT="$ENV_ACTIVATE; python report.py"
+TENSOR_BOARD="$ENV_ACTIVATE; tensorboard --logdir metrics"
+
+SHELL_PATH=".$1rc"
+# ======================================================================================================================
+
+
+# ======================================================================================================================
+# Functions
+# ======================================================================================================================
+function write()     { echo $1 >> ~/$SHELL_PATH; }
+function separator() { write "# ===================================================================================="; }
+function header()    { write  ""; separator; write "# $1"; separator; }
+
+
+# ======================================================================================================================
+# Main
+# ======================================================================================================================
+header "doom-agent config"
+write 'export PATH=.:$PATH'
+write "# Shortcuts..."
+write "alias agent-train='$REMOVE_TRAIN_FILES; $TRAIN'"
+write "alias agent-play='$PLAY'"
+write "alias agent-report='$REPORT'"
+write "alias agent-metrics='$TENSOR_BOARD'"
+separator
