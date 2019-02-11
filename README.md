@@ -26,15 +26,19 @@ or forget use it defining shortcuts(aliases):
 
 **bash**:
 ```bash
-./setup_shortcuts bash
-source ~/.bashrc
+./setup_shortcuts bash; source ~/.bashrc
 ```
 or this if you use zsh:
 
 **zsh**:
 ```bash
-./setup_shortcuts zsh
-source ~/.zshrc
+./setup_shortcuts zsh; source ~/.zshrc
+```
+
+Also exist use gpu option with optiprime adding gup param like this:
+
+```bash
+./setup_shortcuts zsh gpu; source ~/.zshrc
 ```
 
 ## Use
