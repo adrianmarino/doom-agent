@@ -118,3 +118,5 @@ test_weights/
 reports/
 
 .~lock.*
+
+scenarios/deadly_corridor/

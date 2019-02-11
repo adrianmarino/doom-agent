@@ -1,5 +1,5 @@
 import time
-
+import vizdoom as vzd
 from lib.agent.agent_context import AgentContext
 from lib.agent.frame_window import FrameWindow
 from lib.agent.phase.agent_phase_factory import AgentPhaseFactory
@@ -100,7 +100,7 @@ class Agent:
 
             phase = self.__phase_factory.create(self.__ctx)
             phase.on_each_time(self.__ctx)
-            time.sleep(frame_delay)
+            time.sleep(1 / vzd.DEFAULT_TICRATE)
 
     def __resolver_action(self, initial_state_frames):
         return self.__action_resolver.action(initial_state_frames, self.__ctx.epsilon)

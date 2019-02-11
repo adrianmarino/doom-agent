@@ -20,6 +20,7 @@ ENV_ACTIVATE="conda activate doom-agent"
 REMOVE_TRAIN_FILES="$SUDO rm -rf logs metrics checkpoints"
 TRAIN="$ENV_ACTIVATE; $USE_GPU python agent-train.py"
 PLAY="$ENV_ACTIVATE; $USE_GPU python agent-play.py"
+DEMO="$PLAY --weights weights/best_2019_02_09_17_19_52-weights-loss_0.0123.h5"
 REPORT="$ENV_ACTIVATE; python report.py"
 TENSOR_BOARD="$ENV_ACTIVATE; tensorboard --logdir metrics"
 # ======================================================================================================================
@@ -41,6 +42,7 @@ write 'export PATH=.:$PATH'
 write "# Shortcuts..."
 write "alias agent-train='$REMOVE_TRAIN_FILES; $TRAIN'"
 write "alias agent-play='$PLAY'"
+write "alias agent-demo='$DEMO'"
 write "alias agent-report='$REPORT'"
 write "alias agent-metrics='$TENSOR_BOARD'"
 separator

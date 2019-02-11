@@ -59,8 +59,15 @@ After go to dash: http://localhost:6006
 * Play agent:
 
 ```bash
-agent-play --weights weights/best_2019_02_09_17_19_52-weights-loss_0.0123.h5
+agent-play --weights weights_file
 ```
+
+* Show demo:
+
+```bash
+agent-demo
+```
+
 
 * To view all options:
 

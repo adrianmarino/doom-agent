@@ -11,7 +11,7 @@ env:
   play:
     show: True
     sound: True
-    advance_steps: 0 # Number of frames to advance environment after apply an stategy to this.
+    advance_steps: 4 # Number of frames to advance environment after apply an stategy to this.
     episodes: 20
     frame_delay: 0.1
 
