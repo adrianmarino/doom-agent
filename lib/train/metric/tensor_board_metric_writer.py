@@ -1,4 +1,4 @@
-from lib.metric.summary_builder import SummaryBuilder
+from lib.train.metric.summary_builder import SummaryBuilder
 from lib.util.os_utils import create_file_path
 import tensorflow as tf
 

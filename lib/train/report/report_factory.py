@@ -1,5 +1,5 @@
-from lib.report.agent_metric_report import AgentMetricReport
-from lib.report.formatter.json_report_formatter import PrettyJsonFormatter
+from lib.train.report.agent_metric_report import AgentMetricReport
+from lib.train.report.formatter.json_report_formatter import PrettyJsonFormatter
 
 
 class AgentReportFactory:

@@ -1,4 +1,4 @@
-from lib.agent.callback.metric.custom_metric_update_callback import CustomMetricUpdateCallback
+from lib.train.callback.metric.custom_metric_update_callback import CustomMetricUpdateCallback
 
 
 class EpsilonMetricUpdateCallback(CustomMetricUpdateCallback):

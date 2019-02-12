@@ -1,7 +1,7 @@
 import abc
 
 
-class AgentPhase(abc.ABC):
+class AlgorithmPhase(abc.ABC):
     @abc.abstractmethod
     def on_each_time(self, ctx):
         pass

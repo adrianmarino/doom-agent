@@ -1,4 +1,4 @@
-from lib.agent.callback.agent_callback import AgentCallback
+from lib.train.callback.agent_callback import AgentCallback
 from lib.util.os_utils import create_file_path
 
 

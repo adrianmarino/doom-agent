@@ -1,8 +1,8 @@
-from lib.agent.callback.metric.environment_variable_metric_update_callback import \
+from lib.train.callback.metric.environment_variable_metric_update_callback import \
     EnvironmentVariableMetricUpdateCallback
-from lib.agent.callback.metric.epsilon_metric_update_callback import EpsilonMetricUpdateCallback
-from lib.agent.callback.metric.td_target_metric_update_callback import TDTargetMetricUpdateCallback
-from lib.agent.callback.model.save_model_callback import SaveModelCallback
+from lib.train.callback.metric.epsilon_metric_update_callback import EpsilonMetricUpdateCallback
+from lib.train.callback.metric.td_target_metric_update_callback import TDTargetMetricUpdateCallback
+from lib.train.callback.model.save_model_callback import SaveModelCallback
 
 class AgentCallbackFactory:
     def __init__(self, cfg):

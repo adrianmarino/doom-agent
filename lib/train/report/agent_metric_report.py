@@ -1,8 +1,8 @@
 from collections import OrderedDict
 from statistics import mean
 
-from lib.metric.tensor_board_metric_reader import TensorBoardMetricReader
-from lib.model.model_utils import best_loss
+from lib.train.metric.tensor_board_metric_reader import TensorBoardMetricReader
+from lib.train.model.model_utils import best_loss
 
 
 class AgentMetricReport:

@@ -11,7 +11,7 @@ env:
   play:
     show: True
     sound: True
-    advance_steps: 0 # Number of frames to advance environment after apply an stategy to this.
+    advance_steps: 4 # Number of frames to advance environment after apply an stategy to this.
     episodes: 20
     frame_delay: 0.1
 
@@ -32,7 +32,7 @@ hiperparams:
     final: 0.001
   phase_time:
     observe: 2000 # Number of times that epsilon-greedy method select a random stategy.
-    explore: 50000 # Number of times that epsilon-greedy method select a predicted stategy(from a neural network).
+    explore: 5000 # Number of times that epsilon-greedy method select a predicted stategy(from a neural network).
     train: 0
   rewards:
     kills: 1.5  # Increase X reward every time an enemy is killed.

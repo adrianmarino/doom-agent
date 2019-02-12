@@ -1,22 +1,32 @@
-from lib.action.epsilon_greedy_action_choicer import EpsilonGreedyActionResolver
-from lib.action.epsilon_value import EpsilonValue
-from lib.agent.agent import Agent
-from lib.agent.callback.agent_callback_factory import AgentCallbackFactory
-from lib.model.td_target_update_freq_resolver import TDTargetUpdateFreqResolver
+from lib.env.environment import Environment
 from lib.logger_factory import LoggerFactory
-from lib.model.callback.checkpoint_callback_factory import CheckpointCallbackFactory
-from lib.model.callback.tensor_board_callback_factory import TensorBoardCallbackFactory
-from lib.model.image_pre_processor import ImagePreProcessor
-from lib.model.model import FrameWindowToModelInputConverter, create_model
-from lib.model.model_fit_strategy import ModelFitStrategy
-from lib.transition.state_transation_memory import StateTransitionMemory
+from lib.train.action.epsilon_greedy_action_choicer import EpsilonGreedyActionResolver
+from lib.train.action.epsilon_value import EpsilonValue
+from lib.train.algorithm.ddqn.ddqn_train_algorithm import DDQNTrainAlgorithm
+from lib.train.callback.agent_callback_factory import AgentCallbackFactory
+from lib.train.model.callback.checkpoint_callback_factory import CheckpointCallbackFactory
+from lib.train.model.callback.tensor_board_callback_factory import TensorBoardCallbackFactory
+from lib.train.model.image_pre_processor import ImagePreProcessor
+from lib.train.model.model import FrameWindowToModelInputConverter, create_model
+from lib.train.model.model_fit_strategy import ModelFitStrategy
+from lib.train.model.td_target_update_freq_resolver import TDTargetUpdateFreqResolver
+from lib.train.transition.state_transation_memory import StateTransitionMemory
 from lib.util.input_shape import InputShape
 
 
-class AgentFactory:
+class DDQNTrainAlgorithmFactory:
 
     @staticmethod
-    def create(cfg, env):
+    def create(cfg, rewards_computation_strategy):
+        env = Environment(
+            config_file=cfg['env.config_file'],
+            advance_steps=cfg['env.train.advance_steps'],
+            rewards_computation_strategy=rewards_computation_strategy,
+            variable_names=cfg['env.variables'],
+            window_visible=cfg['env.train.show'],
+            sound_enabled=cfg['env.train.sound']
+        )
+
         logger = LoggerFactory(cfg['logger']).create()
 
         input_shape = InputShape.from_str(cfg['hiperparams.input_shape'])
@@ -66,7 +76,7 @@ class AgentFactory:
             cfg['hiperparams.update_target_model_freq_schedule']
         )
 
-        return Agent(
+        return DDQNTrainAlgorithm(
             env,
             input_shape,
             model,

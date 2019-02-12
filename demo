@@ -1,2 +1,0 @@
-#!/bin/bash
-python agent-play.py --weights weights/best_2019_02_09_17_19_52-weights-loss_0.0123.h5

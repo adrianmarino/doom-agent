@@ -1,5 +1,5 @@
-from lib.agent.callback.agent_callback import AgentCallback
-from lib.metric.tensor_board_metric_writer import TensorBoardMetricWriter
+from lib.train.callback.agent_callback import AgentCallback
+from lib.train.metric.tensor_board_metric_writer import TensorBoardMetricWriter
 
 
 @AgentCallback.register

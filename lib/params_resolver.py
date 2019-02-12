@@ -1,6 +1,6 @@
 import argparse
 
-from lib.model.model_utils import get_best_weights_file_from
+from lib.train.model.model_utils import get_best_weights_file_from
 
 
 class ParamsResolver:
