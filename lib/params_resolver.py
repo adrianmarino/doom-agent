@@ -14,20 +14,6 @@ class ParamsResolver:
             default=default_weights_path
         )
 
-        episodes = cfg['env.play.episodes']
-        self.__parser.add_argument(
-            '--episodes',
-            help=f'Number of episodes to play. Default value: {episodes}.',
-            default=episodes
-        )
-
-        frame_delay = cfg['env.play.frame_delay']
-        self.__parser.add_argument(
-            '--frame-delay',
-            help=f'Delay time between frames when play agent. Default value: {frame_delay}.',
-            default=frame_delay
-        )
-
     def resolver(self):
         return self.__params(self.__parser)
 
