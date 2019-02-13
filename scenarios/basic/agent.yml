@@ -11,7 +11,7 @@ env:
   play:
     show: True
     sound: True
-    advance_steps: 4 # Number of frames to advance environment after apply an stategy to this.
+    advance_steps: ${env.train.advance_steps}
     episodes: 30
     frame_delay: 0.25
 
@@ -23,8 +23,7 @@ hiperparams:
   batch_size: 16 # Model fit batch size.
   train_freq: 100 # Number of time steps between training interval.
   update_target_model_freq_schedule: # Number of time steps between each TD Target model weights update.
-    -
-      from_time: 0 # Initially update each 900 times.
+    - from_time: 0 # Initially update each 900 times.
       freq: 2000
   memory_size: 5000 # Number of previous transitions to remember.
   epsilon:
@@ -33,22 +32,59 @@ hiperparams:
   phase_time:
     observe: 2000 # Number of times that epsilon-greedy method select a random strategy.
     explore: 30000 # Number of times that epsilon-greedy method select a predicted strategy(from a neural network).
-    train: 0
+    train: 5000
   rewards:
     kills: 0.5 # Increase X reward every time an enemy is killed.
     ammo: 0  # Decrease X reward every time a bullet is used.
     health: 0 # Decrease X reward every time health level goes down.
 
-checkpoint:
-  freq: 5000 # Save model weights every X times.
-  path: checkpoints # Path were weights files are saved.
-
-metric:
-  path: ./metrics # Tensor board metrics path.
+callbacks:
+  model:
+    active:
+      - tensor_board
+      # - checkpoint
+    settings:
+      checkpoint:
+        monitor: loss
+        path: ${checkpoint_path} # Path were weights files are saved.
+      tensor_board:
+        batch_size: ${hiperparams.batch_size}
+        metric_path: ./metrics
+  algorithm:
+    active:
+      # - epsilon
+      # - td_target_update
+      - kills
+      # - ammo
+      # - health
+      - save_model
+    settings:
+      save_model: # Save model weights every X times.
+        freq: 0 # last time
+        path: ${checkpoint_path}
+      epsilon:
+        initial: ${hiperparams.epsilon.initial}
+        final: ${hiperparams.epsilon.final}
+        explore: ${hiperparams.phase_time.explore}
+        metric_path: ${metric_path}
+      td_target_update:
+        metric_path: ${metric_path}
+        schedule: ${hiperparams.update_target_model_freq_schedule}
+      kills:
+        metric_path: ${metric_path}
+      ammo:
+        metric_path: ${metric_path}
+      health:
+        metric_path: ${metric_path}
 
 report:
   path: ./reports
   last_times: 200
+  metrics:
+    - kills
+
+metric_path: ./metrics
+checkpoint_path: checkpoints # Path were weights files are saved.
 
 logger:
   name: agent

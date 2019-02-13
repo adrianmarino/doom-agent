@@ -44,6 +44,9 @@ class DDQNAlgorithmContext:
     def is_final_time(self):
         return self.time == (self.observe_times + self.explore_times + self.train_times)
 
+    def final_time(self):
+        return self.observe_times + self.explore_times + self.train_times
+
     def is_train_time(self):
         return not self.is_final_time() and self.time % self.train_freq == 0
 

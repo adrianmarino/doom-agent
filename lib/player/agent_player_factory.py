@@ -7,8 +7,10 @@ from lib.util.input_shape import InputShape
 
 
 class AgentPlayerFactory:
-    @staticmethod
-    def create(cfg):
+    def __init__(self, logger):
+        self.__logger = logger
+
+    def create(self, cfg):
         env = Environment(
             config_file=cfg['env.config_file'],
             advance_steps=cfg['env.play.advance_steps'],
@@ -39,5 +41,3 @@ class AgentPlayerFactory:
             cfg['env.play.frame_delay'],
             cfg['env.play.episodes']
         )
-
-

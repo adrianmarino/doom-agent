@@ -1,8 +1,8 @@
-from lib.train.callback.agent_callback import AgentCallback
+from lib.train.callback.algorithm_callback import AlgorithmCallback
 from lib.train.metric.tensor_board_metric_writer import TensorBoardMetricWriter
 
 
-@AgentCallback.register
+@AlgorithmCallback.register
 class CustomMetricUpdateCallback:
     def __init__(self, metric_path, metric_name, value_resolver, display_name='', description='', each_episode=False):
         self.__metric = TensorBoardMetricWriter(metric_path, metric_name, display_name, description)

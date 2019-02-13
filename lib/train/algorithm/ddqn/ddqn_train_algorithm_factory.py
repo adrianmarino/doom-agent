@@ -3,8 +3,9 @@ from lib.logger_factory import LoggerFactory
 from lib.train.action.epsilon_greedy_action_choicer import EpsilonGreedyActionResolver
 from lib.train.action.epsilon_value import EpsilonValue
 from lib.train.algorithm.ddqn.ddqn_train_algorithm import DDQNTrainAlgorithm
-from lib.train.callback.agent_callback_factory import AgentCallbackFactory
+from lib.train.callback.algorithm_callback_factory import AlgorithmCallbackFactory
 from lib.train.model.callback.checkpoint_callback_factory import CheckpointCallbackFactory
+from lib.train.model.callback.model_callback_factory import ModelCallbackFactory
 from lib.train.model.callback.tensor_board_callback_factory import TensorBoardCallbackFactory
 from lib.train.model.image_pre_processor import ImagePreProcessor
 from lib.train.model.model import FrameWindowToModelInputConverter, create_model
@@ -15,9 +16,10 @@ from lib.util.input_shape import InputShape
 
 
 class DDQNTrainAlgorithmFactory:
+    def __init__(self, logger):
+        self.__logger = logger
 
-    @staticmethod
-    def create(cfg, rewards_computation_strategy):
+    def create(self, cfg, rewards_computation_strategy):
         env = Environment(
             config_file=cfg['env.config_file'],
             advance_steps=cfg['env.train.advance_steps'],
@@ -27,13 +29,23 @@ class DDQNTrainAlgorithmFactory:
             sound_enabled=cfg['env.train.sound']
         )
 
-        logger = LoggerFactory(cfg['logger']).create()
-
         input_shape = InputShape.from_str(cfg['hiperparams.input_shape'])
 
         input_converter = FrameWindowToModelInputConverter()
-        model = create_model(input_shape, env.actions_count(), cfg['hiperparams.lr'], input_converter, logger)
-        target_model = create_model(input_shape, env.actions_count(), cfg['hiperparams.lr'], input_converter, logger)
+        model = create_model(
+            input_shape,
+            env.actions_count(),
+            cfg['hiperparams.lr'],
+            input_converter,
+            self.__logger
+        )
+        target_model = create_model(
+            input_shape,
+            env.actions_count(),
+            cfg['hiperparams.lr'],
+            input_converter,
+            self.__logger
+        )
 
         epsilon = EpsilonValue(
             cfg['hiperparams.epsilon.initial'],
@@ -45,10 +57,7 @@ class DDQNTrainAlgorithmFactory:
 
         state_transition_memory = StateTransitionMemory(cfg['hiperparams.memory_size'])
 
-        model_train_callbacks = [
-            TensorBoardCallbackFactory.create(cfg['metric.path'], cfg['hiperparams.batch_size']),
-            CheckpointCallbackFactory.create(cfg['checkpoint.path'], 'loss')
-        ]
+        model_callbacks = ModelCallbackFactory(cfg).create_all(cfg['callbacks.model.active'])
 
         model_train_strategy = ModelFitStrategy(
             model,
@@ -59,7 +68,7 @@ class DDQNTrainAlgorithmFactory:
             input_shape,
             cfg['hiperparams.gamma'],
             input_converter,
-            model_train_callbacks
+            model_callbacks
         )
 
         image_pre_processor = ImagePreProcessor(
@@ -68,9 +77,7 @@ class DDQNTrainAlgorithmFactory:
             cfg['hiperparams.chop_bottom_height']
         )
 
-        agent_callbacks = AgentCallbackFactory(cfg).create_all(
-            ['epsilon', 'td_target_update', 'kills', 'ammo', 'health']  # , 'save_model']
-        )
+        algorithm_callbacks = AlgorithmCallbackFactory(cfg).create_all(cfg['callbacks.algorithm.active'])
 
         td_target_update_freq_resolver = TDTargetUpdateFreqResolver(
             cfg['hiperparams.update_target_model_freq_schedule']
@@ -86,11 +93,11 @@ class DDQNTrainAlgorithmFactory:
             action_resolver,
             state_transition_memory,
             image_pre_processor,
-            logger,
+            self.__logger,
             cfg['hiperparams.phase_time.observe'],
             cfg['hiperparams.phase_time.explore'],
             cfg['hiperparams.phase_time.train'],
             cfg['hiperparams.train_freq'],
             td_target_update_freq_resolver,
-            agent_callbacks
+            algorithm_callbacks
         )

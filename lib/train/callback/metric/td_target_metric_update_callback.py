@@ -1,8 +1,8 @@
-from lib.train.callback.agent_callback import AgentCallback
+from lib.train.callback.algorithm_callback import AlgorithmCallback
 from lib.train.metric.tensor_board_metric_writer import TensorBoardMetricWriter
 
 
-@AgentCallback.register
+@AlgorithmCallback.register
 class TDTargetMetricUpdateCallback:
     def __init__(self, metric_path, update_target_model_freq_schedule):
         description = f"""

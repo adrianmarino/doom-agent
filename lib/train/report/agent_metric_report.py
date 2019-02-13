@@ -6,18 +6,18 @@ from lib.train.model.model_utils import best_loss
 
 
 class AgentMetricReport:
-    def __init__(self, checkpoint_path, metric_path, metrics, hiperparams, weights_file, last_times=50):
+    def __init__(self, checkpoint_path, metric_path, metrics, config, weights_file, last_times=50):
         self.__reader = {}
         for metric in metrics:
             self.__reader[metric] = TensorBoardMetricReader(metric_path, metric)
         self.__checkpoint_path = checkpoint_path
-        self.__hiperparams = hiperparams
+        self.__config = config
         self.__weights_file = weights_file
         self.__last_times = last_times
 
     def __build(self):
         data = OrderedDict()
-        data['hiperparams'] = self.__hiperparams
+        data['config'] = self.__config
         data['weights'] = self.__weights_file
         data['metrics'] = OrderedDict()
         for name, reader in self.__reader.items():
