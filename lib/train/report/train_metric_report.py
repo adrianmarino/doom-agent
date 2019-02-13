@@ -5,7 +5,7 @@ from lib.train.metric.tensor_board_metric_reader import TensorBoardMetricReader
 from lib.train.model.model_utils import best_loss
 
 
-class AgentMetricReport:
+class TrainMetricReport:
     def __init__(self, checkpoint_path, metric_path, metrics, config, weights_file, last_times=50):
         self.__reader = {}
         for metric in metrics:
@@ -27,13 +27,16 @@ class AgentMetricReport:
                 values = values[:-self.__last_times]
 
             data['metrics'][name] = {
-                'mean': mean(values),
+                'mean': self.avg(values),
                 'count': len(values),
                 'values': sorted([{'occurs': values.count(value), 'value': value} for value in set(values)],
                                  key=lambda it: it['occurs'], reverse=True)
             }
         data['loss']: best_loss(self.__checkpoint_path)
         return data
+
+    def avg(self, values):
+        return mean(values) if len(values) > 0 else 0
 
     def format_to(self, formatter):
         return formatter.format(self.__build())

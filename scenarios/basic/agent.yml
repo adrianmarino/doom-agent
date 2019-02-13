@@ -53,7 +53,7 @@ callbacks:
   algorithm:
     active:
       # - epsilon
-      # - td_target_update
+      # - td_target
       - kills
       # - ammo
       # - health

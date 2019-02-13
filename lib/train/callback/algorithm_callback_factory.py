@@ -22,8 +22,8 @@ class AlgorithmCallbackFactory:
 
         if 'td_target_update' == name:
             return TDTargetMetricUpdateCallback(
-                self.cfg['callbacks.algorithm.settings.td_target.metric_path'],
-                self.cfg['callbacks.algorithm.settings.td_target.schedule']
+                self.cfg['callbacks.algorithm.settings.td_target_update.metric_path'],
+                self.cfg['callbacks.algorithm.settings.td_target_update.schedule']
             )
 
         if 'kills' == name:
