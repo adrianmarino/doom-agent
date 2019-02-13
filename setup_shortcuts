@@ -22,7 +22,6 @@ REMOVE_TRAIN_FILES="$SUDO rm -rf logs metrics checkpoints"
 TRAIN="$ENV_ACTIVATE; $USE_GPU python agent-train.py"
 PLAY="$ENV_ACTIVATE; $USE_GPU python agent-play.py"
 DEMO="$PLAY --config $DEFAULT_SCENE_PATH/agent.yml --weights $DEFAULT_SCENE_PATH/2019_02_09_17_19_52-weights-loss_0.0123.h5"
-REPORT="$ENV_ACTIVATE; python report.py"
 TENSOR_BOARD="$ENV_ACTIVATE; tensorboard --logdir metrics"
 # ======================================================================================================================
 
