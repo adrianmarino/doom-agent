@@ -114,9 +114,7 @@ logs/
 checkpoints/
 metrics/
 _vizdoom.ini
-test_weights/
 reports/
 
 .~lock.*
-
 scenarios/deadly_corridor/

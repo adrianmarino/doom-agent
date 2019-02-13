@@ -1,14 +1,12 @@
 from lib.env.environment import Environment
-from lib.logger_factory import LoggerFactory
 from lib.train.action.epsilon_greedy_action_choicer import EpsilonGreedyActionResolver
 from lib.train.action.epsilon_value import EpsilonValue
 from lib.train.algorithm.ddqn.ddqn_train_algorithm import DDQNTrainAlgorithm
 from lib.train.callback.algorithm_callback_factory import AlgorithmCallbackFactory
-from lib.train.model.callback.checkpoint_callback_factory import CheckpointCallbackFactory
 from lib.train.model.callback.model_callback_factory import ModelCallbackFactory
-from lib.train.model.callback.tensor_board_callback_factory import TensorBoardCallbackFactory
+from lib.train.model.frame_window_to_model_input_converter import FrameWindowToModelInputConverter
 from lib.train.model.image_pre_processor import ImagePreProcessor
-from lib.train.model.model import FrameWindowToModelInputConverter, create_model
+from lib.train.model.model_factory import ModelFactory
 from lib.train.model.model_fit_strategy import ModelFitStrategy
 from lib.train.model.td_target_update_freq_resolver import TDTargetUpdateFreqResolver
 from lib.train.transition.state_transation_memory import StateTransitionMemory
@@ -32,19 +30,20 @@ class DDQNTrainAlgorithmFactory:
         input_shape = InputShape.from_str(cfg['hiperparams.input_shape'])
 
         input_converter = FrameWindowToModelInputConverter()
-        model = create_model(
+
+        model_factory = ModelFactory(input_converter, self.__logger)
+
+        model = model_factory.create(
+            cfg['hiperparams.model'],
             input_shape,
             env.actions_count(),
-            cfg['hiperparams.lr'],
-            input_converter,
-            self.__logger
+            cfg['hiperparams.lr']
         )
-        target_model = create_model(
+        target_model = model_factory.create(
+            cfg['hiperparams.model'],
             input_shape,
             env.actions_count(),
-            cfg['hiperparams.lr'],
-            input_converter,
-            self.__logger
+            cfg['hiperparams.lr']
         )
 
         epsilon = EpsilonValue(

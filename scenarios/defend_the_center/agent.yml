@@ -37,6 +37,7 @@ hiperparams:
     kills: 1.3  # Increase X reward every time an enemy is killed.
     ammo: -1.1  # Decrease X reward every time a bullet is used.
     health: -1 # Decrease X reward every time health level goes down.
+  model: model_a
 
 callbacks:
   model:

@@ -1,8 +1,9 @@
 from lib.env.environment import Environment
 from lib.logger_factory import LoggerFactory
 from lib.player.agent_player import AgentPlayer
+from lib.train.model.frame_window_to_model_input_converter import FrameWindowToModelInputConverter
 from lib.train.model.image_pre_processor import ImagePreProcessor
-from lib.train.model.model import FrameWindowToModelInputConverter, create_model
+from lib.train.model.model_factory import ModelFactory
 from lib.util.input_shape import InputShape
 
 
@@ -24,7 +25,15 @@ class AgentPlayerFactory:
         input_shape = InputShape.from_str(cfg['hiperparams.input_shape'])
 
         input_converter = FrameWindowToModelInputConverter()
-        model = create_model(input_shape, env.actions_count(), cfg['hiperparams.lr'], input_converter, logger)
+
+        model_factory = ModelFactory(input_converter, logger)
+
+        model = model_factory.create(
+            cfg['hiperparams.model'],
+            input_shape,
+            env.actions_count(),
+            cfg['hiperparams.lr']
+        )
 
         image_pre_processor = ImagePreProcessor(
             input_shape.rows,
