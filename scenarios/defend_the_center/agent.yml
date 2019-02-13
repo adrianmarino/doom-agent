@@ -1,5 +1,5 @@
 env:
-  config_file: ./scenarios/defend_the_center/defend_the_center.cfg
+  config_file: ./scenarios/defend_the_center/doom.cfg
   variables:
     - kills
     - ammo
@@ -32,7 +32,7 @@ hiperparams:
     final: 0.001
   phase_time:
     observe: 2000 # Number of times that epsilon-greedy method select a random stategy.
-    explore: 5000 # Number of times that epsilon-greedy method select a predicted stategy(from a neural network).
+    explore: 50000 # Number of times that epsilon-greedy method select a predicted stategy(from a neural network).
     train: 0
   rewards:
     kills: 1.5  # Increase X reward every time an enemy is killed.

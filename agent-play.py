@@ -4,8 +4,8 @@ from lib.player.agent_player_factory import AgentPlayerFactory
 from lib.util.config import Config
 
 if __name__ == "__main__":
-    cfg = Config('./config.yml')
-    params = ParamsResolver(cfg, description="Play Doom Agent").resolver()
+    params = ParamsResolver("Play Doom Agent").resolver()
+    cfg = Config(params['config'])
 
     setup_backend()
 

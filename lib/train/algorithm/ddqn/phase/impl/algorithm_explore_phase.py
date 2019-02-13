@@ -13,4 +13,4 @@ class AlgorithmExplorePhase:
             ctx.log('Explore', f'Update TD Target Model (Each {ctx.td_target_update_freq_resolver.current()} times)')
 
     def on_episode_finish(self, ctx):
-        ctx.log('Explore', f'Env:{ctx.env.previous_state_variables()} - Epsilon:{ctx.epsilon}')
+        ctx.log('Explore', f'Env:{ctx.env.previous_state_variables()} - Epsilon:{ctx.epsilon.value()}')

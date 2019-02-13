@@ -7,8 +7,8 @@ from lib.util.config import Config
 
 if __name__ == "__main__":
     setup_backend()
-    cfg = Config('./config.yml')
-    params = ParamsResolver(cfg, description="Train Doom Agent").resolver()
+    params = ParamsResolver("Train Agent").resolver()
+    cfg = Config(params['config'])
 
     # Builder train algorithm...
     rewards_computation_strategy = DoomRewardsComputationStrategy(
