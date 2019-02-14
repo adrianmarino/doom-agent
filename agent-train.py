@@ -22,11 +22,7 @@ if __name__ == "__main__":
     logger.info(f'Config: {PrettyJsonFormatter().format(cfg.dict)}')
 
     # Builder train algorithm...
-    rewards_computation_strategy = DoomRewardsComputationStrategy(
-        cfg['hiperparams.rewards.kills'],
-        cfg['hiperparams.rewards.ammo'],
-        cfg['hiperparams.rewards.health']
-    )
+    rewards_computation_strategy = DoomRewardsComputationStrategy(logger, cfg['hiperparams.rewards'])
 
     train_algorithm = DDQNTrainAlgorithmFactory(logger).create(cfg, rewards_computation_strategy)
 
