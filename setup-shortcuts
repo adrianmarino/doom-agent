@@ -12,6 +12,11 @@ then
     USE_GPU="$SUDO systemctl start bumblebeed; $SUDO optiprime"
 fi
 DEFAULT_SCENE_PATH=scenarios/defend_the_center
+WEIGHTS_FILE=best_weights-loss_0.0208.h5
+# WEIGHTS_FILE=weights-loss_0.0123.h5
+# ======================================================================================================================
+
+
 
 
 # ======================================================================================================================
@@ -20,10 +25,12 @@ DEFAULT_SCENE_PATH=scenarios/defend_the_center
 ENV_ACTIVATE="conda activate doom-agent"
 REMOVE_TRAIN_FILES="$SUDO rm -rf logs metrics checkpoints"
 TRAIN="$ENV_ACTIVATE; $USE_GPU python agent-train.py"
-PLAY="$ENV_ACTIVATE; $USE_GPU python agent-play.py"
-DEMO="$PLAY --config $DEFAULT_SCENE_PATH/agent.yml --weights $DEFAULT_SCENE_PATH/2019_02_09_17_19_52-weights-loss_0.0123.h5"
+PLAY="$ENV_ACTIVATE; clear; $USE_GPU python agent-play.py"
+DEMO="$PLAY --config $DEFAULT_SCENE_PATH/agent.yml --weights $DEFAULT_SCENE_PATH/weights/$WEIGHTS_FILE"
 TENSOR_BOARD="$ENV_ACTIVATE; tensorboard --logdir metrics"
 # ======================================================================================================================
+
+
 
 
 # ======================================================================================================================
@@ -32,6 +39,9 @@ TENSOR_BOARD="$ENV_ACTIVATE; tensorboard --logdir metrics"
 function write()     { echo -e $1 >> ~/$SHELL_CONFIG_FILE; }
 function separator() { write "# ===================================================================================="; }
 function header()    { write  ""; separator; write "# $1"; separator; }
+# ======================================================================================================================
+
+
 
 
 # ======================================================================================================================
@@ -46,3 +56,4 @@ write "alias agent-demo='$DEMO'"
 write "alias agent-report='$REPORT'"
 write "alias agent-metrics='$TENSOR_BOARD'"
 separator
+# ======================================================================================================================

@@ -20,13 +20,11 @@ class AgentPlayerFactory:
             sound_enabled=cfg['env.play.sound']
         )
 
-        logger = LoggerFactory(cfg['logger']).create()
-
         input_shape = InputShape.from_str(cfg['hiperparams.input_shape'])
 
         input_converter = FrameWindowToModelInputConverter()
 
-        model_factory = ModelFactory(input_converter, logger)
+        model_factory = ModelFactory(input_converter, self.__logger)
 
         model = model_factory.create(
             cfg['hiperparams.model'],
@@ -46,7 +44,7 @@ class AgentPlayerFactory:
             input_shape,
             model,
             image_pre_processor,
-            logger,
+            self.__logger,
             cfg['env.play.frame_delay'],
             cfg['env.play.episodes']
         )
