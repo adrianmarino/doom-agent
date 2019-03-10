@@ -8,7 +8,7 @@ The idea is kill largest amount of enemies in an episode.
 * conda
 * A GPU can improve training time: Is required that nvidia module is loaded.
 
-## Setup
+## Getting started
 
 **Step 1:** Create project environment.
 
@@ -22,70 +22,68 @@ conda env create --file environment.yml
 source activate doom-agent
 ```
 
-or forget use it defining shortcuts(aliases):
+or forget use it defining shortcuts(aliases) as follow:
 
-**bash**:
-```bash
-./setup_shortcuts bash; source ~/.bashrc
-```
-or this if you use zsh:
+* If you are a **bash** shell user:
 
-**zsh**:
-```bash
-./setup_shortcuts zsh; source ~/.zshrc
-```
+    ```bash
+    ./setup_shortcuts bash; source ~/.bashrc
+    ```
 
-Also exist use gpu option with optiprime adding gup param like this:
+* If you are a **zsh** shell user:
 
-```bash
-./setup_shortcuts zsh gpu; source ~/.zshrc
-```
+    ```bash
+    ./setup-shortcuts zsh; source ~/.zshrc
+    ```
 
-## Use
-
-* Train agent:
+Also you can use gpu via optiprime adding `gpu` param like this:
 
 ```bash
-agent-train [--weights weights_file_path]
-```
-Note: When train process finish you can see report/weights_file under reports path.
-
-* See evolution of train process loading tensor board:
-```bash
-agent-metrics
-```
-After go to dash: http://localhost:6006
-
-* Play agent:
-
-```bash
-agent-play --weights weights_file
+./setup-shortcuts zsh gpu; source ~/.zshrc
 ```
 
-* Show demo:
+**Step 2:** Run agent in `defende the center` scenario.
 
 ```bash
 agent-demo
 ```
 
+## Use
 
-* To view all options:
-
+#### Train agent
+    
 ```bash
-agent-train --help
+agent-train [--weights weights_file_path]
 ```
 
-or
+See evolution of train process loading tensor board:
 
 ```bash
-agent-play --help
+agent-metrics
+```
+After go to dash: http://localhost:6006
+
+**Note**: When train process finish you can see `report/weights_file` under reports path.
+
+#### Play agent
+
+```bash
+agent-play --weights weights_file
+```
+
+#### Help
+
+To see all available args:
+
+```bash
+agent-train/agent-play  --help
 ```
 
 
-## Scenarios(environments)
+## Scenarios
 
 
-### Basic
+#### Basic
 The purpose of the scenario is just to check if using this
 framework to train some AI i 3D environment is feasible.
 
@@ -97,26 +95,7 @@ and shoot. 1 hit is enough to kill the monster. Episode
 finishes when monster is killed or on timeout.
 
 
-### Deadly Corridor
-
-The purpose of this scenario is to teach the agent to navigate towards
-his fundamental goal (the vest) and make sure he survives at the
-same time.
-
-Map is a corridor with shooting monsters on both sides (6 monsters
-in total). A green vest is placed at the oposite end of the corridor.
-Reward is proportional (negative or positive) to change of the
-distance between the player and the vest. If player ignores monsters
-on the sides and runs str## DEADLY CORRIDOR
-The purpose of this scenario is to teach the agent to navigate towards
-his fundamental goal (the vest) and make sure he survives at the
-same time.
-aight for the vest he will be killed somewhere
-along the way. To ensure this behavior doom_skill = 5 (config) is
-needed.
-
-
-### Deffend the center
+#### Defend the center
 
 The purpose of this scenario is to teach the agent that killing the
 monsters is GOOD and when monsters kill you is BAD. In addition,
@@ -128,31 +107,3 @@ Map is a large circle. Player is spawned in the exact center.
 killed after a single shot. After dying each monster is respawned
 after some time. Episode ends when the player dies (it's inevitable
 because of limitted ammo).
-
-
-### My way home
-
-The purpose of this scenario is to teach the agent how to navigate
-in a labirynth-like surroundings and reach his ultimate goal
-(and learn what it actually is).
-
-Map is a series of rooms with interconnection and 1 corridor
-with a dead end. Each room has a different color. There is a
-green vest in one of the rooms (the same room every time).
-Player is spawned in randomly choosen room facing a random
-direction. Episode ends when vest is reached or on timeout/
-
-
-### Health Gathering
-
-The purpose of this scenario is to teach the agent how to survive
-without knowing what makes him survive. Agent know only that life
-is precious and death is bad so he must learn what prolongs his
-existence and that his health is connected with it.
-
-Map is a rectangle with green, acidic floor which hurts the player
-periodically. Initially there are some medkits spread uniformly
-over the map. A new medkit falls from the skies every now and then.
-Medkits heal some portions of player's health - to survive agent
-needs to pick them up. Episode finishes after player's death or
-on timeout.
