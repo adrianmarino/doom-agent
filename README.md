@@ -1,4 +1,4 @@
-#  Reinforment learning Doom Agent
+#  DDQN RL Doom Agent
 
 A **DDQN** reinforcement learning agent that can learn to play doom under a level.
 The idea is kill largest amount of enemies in an episode.
