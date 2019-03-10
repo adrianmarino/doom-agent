@@ -42,7 +42,7 @@ Also you can use gpu via optiprime adding `gpu` param like this:
 ./setup-shortcuts zsh gpu; source ~/.zshrc
 ```
 
-**Step 2:** Run agent in `defende the center` scenario.
+**Step 3:** Run agent in `defende the center` scenario.
 
 ```bash
 agent-demo
