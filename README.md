@@ -3,6 +3,17 @@
 A **DDQN** reinforcement learning agent that can learn to play doom under a level.
 The idea is kill largest amount of enemies in an episode.
 
+**Demo video**
+
+<p align="center">
+    <a href="http://www.youtube.com/watch?v=GQzMupMMAaA" target="_tab"/>
+    <img src="http://img.youtube.com/vi/GQzMupMMAaA/0.jpg" 
+        title="Play Doom agent in basic scenario" 
+        alt="Doom agent in basic scenario"/>
+    </a>
+</p>
+
+
 ## Requeriments
 
 * conda
