@@ -39,7 +39,7 @@ or forget use it defining shortcuts(aliases) as follow:
 Also you can use gpu via optiprime adding `gpu` param like this:
 
 ```bash
-./setup-shortcuts zsh gpu; source ~/.zshrc
+./setup-shortcuts bash gpu; source ~/.zshrc
 ```
 
 **Step 3:** Run agent in `defend the center` scenario.
