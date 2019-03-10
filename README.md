@@ -27,7 +27,7 @@ or forget use it defining shortcuts(aliases) as follow:
 * If you are a **bash** shell user:
 
     ```bash
-    ./setup_shortcuts bash; source ~/.bashrc
+    ./setup-shortcuts bash; source ~/.bashrc
     ```
 
 * If you are a **zsh** shell user:
