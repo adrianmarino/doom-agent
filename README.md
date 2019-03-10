@@ -42,7 +42,7 @@ Also you can use gpu via optiprime adding `gpu` param like this:
 ./setup-shortcuts zsh gpu; source ~/.zshrc
 ```
 
-**Step 3:** Run agent in `defende the center` scenario.
+**Step 3:** Run agent in `defend the center` scenario.
 
 ```bash
 agent-demo
@@ -50,25 +50,33 @@ agent-demo
 
 ## Use
 
-#### Train agent
+#### Train
     
 ```bash
 agent-train [--weights weights_file_path]
 ```
 
-See evolution of train process loading tensor board:
+See evolution of train process running tensor board:
 
 ```bash
 agent-metrics
 ```
-After go to dash: http://localhost:6006
+After go to dash: [http://localhost:6006](http://localhost:6006)
 
-**Note**: When train process finish you can see `report/weights_file` under reports path.
+**Note**: When the training process ends you will find best weights file under `reports` path.
 
-#### Play agent
+#### Play
 
+Play agent in `defend the center` scenario:
 ```bash
-agent-play --weights weights_file
+agent-play --config scenarios/defend_the_center/agent.yml \
+           --weights scenarios/defend_the_center/weights/best_weights-loss_0.0208.h5
+```
+
+Play agent in `basic` scenario:
+```bash
+agent-play --config scenarios/basic/agent.yml \
+           --weights scenarios/basic/weights.h5
 ```
 
 #### Help
