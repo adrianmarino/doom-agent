@@ -11,9 +11,6 @@ then
     SUDO="sudo"
     USE_GPU="$SUDO systemctl start bumblebeed; $SUDO optiprime"
 fi
-DEFAULT_SCENE_PATH=scenarios/defend_the_center
-WEIGHTS_FILE=best_weights-loss_0.0208.h5
-# WEIGHTS_FILE=weights-loss_0.0123.h5
 # ======================================================================================================================
 
 
@@ -26,7 +23,8 @@ ENV_ACTIVATE="conda activate doom-agent"
 REMOVE_TRAIN_FILES="$SUDO rm -rf logs metrics checkpoints"
 TRAIN="$ENV_ACTIVATE; $USE_GPU python agent-train.py"
 PLAY="$ENV_ACTIVATE; clear; $USE_GPU python agent-play.py"
-DEMO="$PLAY --config $DEFAULT_SCENE_PATH/agent.yml --weights $DEFAULT_SCENE_PATH/weights/$WEIGHTS_FILE"
+DEMO_BASIC="$PLAY --config scenarios/basic/agent.yml --weights scenarios/basic/weights.h5"
+DEMO_DEFEND="$PLAY --config scenarios/defend_the_center/agent.yml --weights scenarios/defend_the_center/weights/best_weights-loss_0.0208.h5"
 TENSOR_BOARD="$ENV_ACTIVATE; tensorboard --logdir metrics"
 # ======================================================================================================================
 
@@ -52,7 +50,8 @@ write 'export PATH=.:$PATH'
 write "# Shortcuts..."
 write "alias agent-train='$REMOVE_TRAIN_FILES; $TRAIN'"
 write "alias agent-play='$PLAY'"
-write "alias agent-demo='$DEMO'"
+write "alias agent-demo-basic='$DEMO_BASIC'"
+write "alias agent-demo-defend-the-center='$DEMO_DEFEND'"
 write "alias agent-report='$REPORT'"
 write "alias agent-metrics='$TENSOR_BOARD'"
 separator
